@@ -22,7 +22,7 @@ public class Route {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "destination_stop_id")
-    private Stop destinationStop;
+    private BusStop destinationBusStop;
 
     @OneToMany(mappedBy = "route")
     private Set<Bus> buses = new LinkedHashSet<>();

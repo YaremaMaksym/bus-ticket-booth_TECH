@@ -24,7 +24,7 @@ public class RouteStop {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "stop_id", nullable = false)
-    private Stop stop;
+    private BusStop busStop;
 
     @Column(name = "sequence_number")
     private Integer sequenceNumber;

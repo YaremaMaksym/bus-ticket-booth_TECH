@@ -11,7 +11,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "stops")
-public class Stop {
+public class BusStop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "stop_id", nullable = false)
@@ -20,13 +20,13 @@ public class Stop {
     @Column(name = "stop_name")
     private String stopName;
 
-    @OneToMany(mappedBy = "destinationStop")
+    @OneToMany(mappedBy = "destinationBusStop")
     private Set<Route> routes = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "stop")
+    @OneToMany(mappedBy = "busStop")
     private Set<RouteStop> routeStops = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "stop")
+    @OneToMany(mappedBy = "busStop")
     private Set<Ticket> tickets = new LinkedHashSet<>();
 
 }

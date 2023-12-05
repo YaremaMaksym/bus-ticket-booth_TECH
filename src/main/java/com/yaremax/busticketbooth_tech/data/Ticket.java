@@ -24,7 +24,7 @@ public class Ticket {
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "stop_id")
-    private Stop stop;
+    private BusStop busStop;
 
     @Column(name = "seat_number")
     private Integer seatNumber;
