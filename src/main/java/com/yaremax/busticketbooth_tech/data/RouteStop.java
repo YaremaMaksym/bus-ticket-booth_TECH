@@ -10,9 +10,9 @@ import org.hibernate.annotations.OnDeleteAction;
 @Setter
 @Entity
 @Table(name = "routes_stops")
-public class RoutesStop {
+public class RouteStop {
     @EmbeddedId
-    private RoutesStopId id;
+    private RouteStopId id;
 
     @MapsId("routeId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

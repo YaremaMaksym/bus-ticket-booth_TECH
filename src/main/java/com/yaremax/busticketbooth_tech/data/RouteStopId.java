@@ -12,7 +12,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @Embeddable
-public class RoutesStopId implements Serializable {
+public class RouteStopId implements Serializable {
     private static final long serialVersionUID = 2279525142043879564L;
     @Column(name = "route_id", nullable = false)
     private Integer routeId;
@@ -24,7 +24,7 @@ public class RoutesStopId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        RoutesStopId entity = (RoutesStopId) o;
+        RouteStopId entity = (RouteStopId) o;
         return Objects.equals(this.routeId, entity.routeId) &&
                 Objects.equals(this.stopId, entity.stopId);
     }

@@ -28,7 +28,7 @@ public class Route {
     private Set<Bus> buses = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "route")
-    private Set<RoutesStop> routesStops = new LinkedHashSet<>();
+    private Set<RouteStop> routeStops = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "route")
     private Set<Schedule> schedules = new LinkedHashSet<>();
