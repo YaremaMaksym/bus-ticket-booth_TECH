@@ -3,3 +3,7 @@ spring:
         url: jdbc:postgresql://localhost:5432/bus_ticket_booth
         username: postgres
         password: pass
+    mvc:
+        hiddenmethod:
+            filter:
+                enabled: true

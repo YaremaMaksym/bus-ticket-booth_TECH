@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bus stops</title>
+</head>
+<body>
+
+    <form th:action="@{/bus_stops}" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Add Bus Stop</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Edit</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="s : ${bus_stops}">
+                <td th:text="${s.id}"></td>
+                <td th:text="${s.name}"></td>
+                <td>
+                    <button type="button" th:attr="onclick=|openEditDialog('${s.id}', '${s.name}')|">Edit</button>
+                </td>
+                <td>
+                    <form th:action="@{/bus_stops/{id}(id=${s.id})}" th:method="delete">
+                        <button type="submit">Delete</button>
+                        <input type="hidden" name="_method" value="delete"/>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <dialog id="editDialog">
+        <form th:method="patch">
+            <input type="hidden" name="_method" value="patch"/>
+            <input type="hidden" id="editId" name="id">
+            <label for="editName">Name:</label>
+            <input type="text" id="editName" name="name" required>
+            <button type="submit">Apply</button>
+            <button type="button" onclick="document.getElementById('editDialog').close()">Cancel</button>
+        </form>
+    </dialog>
+
+    <script>
+        function openEditDialog(id, name) {
+            console.log(id, name);
+            document.getElementById('editId').value = id;
+            document.getElementById('editName').value = name;
+
+            var form = document.querySelector('#editDialog form');
+            form.action = '/bus_stops/' + id;
+
+            document.getElementById('editDialog').showModal();
+        }
+    </script>
+</body>
+</html>
