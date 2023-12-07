@@ -19,11 +19,6 @@ public class Bus {
     @Column(name = "bus_id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JoinColumn(name = "route_id")
-    private Route route;
-
     @Column(name = "seat_capacity")
     private Integer seatCapacity;
 
