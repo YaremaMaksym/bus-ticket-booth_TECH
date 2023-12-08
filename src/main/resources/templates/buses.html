@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Buses</title>
+</head>
+<body>
+
+<form th:action="@{/buses}" method="post">
+    <label for="seatCapacity">Seat capacity:</label>
+    <input type="number" id="seatCapacity" name="seatCapacity" required>
+    <button type="submit">Add Bus</button>
+</form>
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Seat Capacity</th>
+        <th>Edit</th>
+        <th>Remove</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="bus : ${buses}">
+        <td th:text="${bus.id}"></td>
+        <td th:text="${bus.seatCapacity}"></td>
+        <td>
+            <button type="button" th:attr="onclick=|openEditDialog('${bus.id}', '${bus.seatCapacity}')|">Edit</button>
+        </td>
+        <td>
+            <form th:action="@{/buses/{id}(id=${bus.id})}" th:method="delete">
+                <button type="submit">Delete</button>
+                <input type="hidden" name="_method" value="delete"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<dialog id="editDialog">
+    <form th:method="patch">
+        <input type="hidden" name="_method" value="patch"/>
+        <input type="hidden" id="editId" name="id">
+        <label for="editSeatCapacity">Seat Capacity:</label>
+        <input type="number" id="editSeatCapacity" name="seatCapacity" required>
+        <button type="submit">Apply</button>
+        <button type="button" onclick="document.getElementById('editDialog').close()">Cancel</button>
+    </form>
+</dialog>
+
+<script>
+    function openEditDialog(id, seatCapacity) {
+        console.log(id, seatCapacity);
+        document.getElementById('editId').value = id;
+        document.getElementById('editSeatCapacity').value = seatCapacity;
+
+        var form = document.querySelector('#editDialog form');
+        form.action = '/buses/' + id;
+
+        document.getElementById('editDialog').showModal();
+    }
+</script>
+</body>
+</html>
