@@ -2,9 +2,8 @@ package com.yaremax.busticketbooth_tech.data;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -13,6 +12,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "routes")
+@NoArgsConstructor
 public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +22,14 @@ public class Route {
     @Column(name = "route_name", unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "route")
+    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RouteStop> routeStops = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "route")
     private Set<Schedule> schedules = new LinkedHashSet<>();
 
+    public Route(String name, Set<RouteStop> routeStops) {
+        this.name = name;
+        this.routeStops = routeStops;
+    }
 }

@@ -2,7 +2,9 @@ package com.yaremax.busticketbooth_tech.data;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 
@@ -12,6 +14,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @Embeddable
+@AllArgsConstructor
+@NoArgsConstructor
 public class RouteStopId implements Serializable {
     private static final long serialVersionUID = 2279525142043879564L;
     @Column(name = "route_id", nullable = false)
