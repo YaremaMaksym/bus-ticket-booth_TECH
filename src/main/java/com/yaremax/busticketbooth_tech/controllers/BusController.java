@@ -20,8 +20,8 @@ public class BusController {
     }
 
     @PostMapping
-    public String addBus(@RequestParam Integer seatCapacity) { // Assuming 'detail' is an attribute of Bus
-        busService.addBus(new Bus(seatCapacity)); // Adjust the Bus constructor as per your Bus entity
+    public String addBus(@RequestParam Integer seatCapacity) {
+        busService.addBus(new Bus(seatCapacity));
         return "redirect:/buses";
     }
 
@@ -33,7 +33,7 @@ public class BusController {
 
     @PatchMapping("/{id}")
     public String patchBus(@PathVariable Integer id,
-                           @RequestParam Integer newSeatCapacity) { // Replace 'newDetail' with actual attribute
+                           @RequestParam Integer newSeatCapacity) {
         busService.patchBus(id, newSeatCapacity);
         return "redirect:/buses";
     }
