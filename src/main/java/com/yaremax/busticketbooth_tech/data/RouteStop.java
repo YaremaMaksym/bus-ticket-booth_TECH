@@ -2,6 +2,7 @@ package com.yaremax.busticketbooth_tech.data;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -10,6 +11,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Setter
 @Entity
 @Table(name = "routes_stops")
+@NoArgsConstructor
 public class RouteStop {
     @EmbeddedId
     private RouteStopId id;

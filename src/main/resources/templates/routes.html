@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Routes</title>
+    <style>
+        .stop-entry {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .stop-entry > div,
+        .stop-entry > select,
+        .stop-entry > input,
+        .stop-order
+    </style>
+</head>
+<body>
+
+    <button type="button" onclick="openAddRouteDialog()">Add New Route</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Remove</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="r : ${routes}">
+                <td th:text="${r.id}"></td>
+                <td th:text="${r.name}"></td>
+                <td>
+                    <form th:action="@{/routes/{id}(id=${r.id})}" th:method="delete">
+                        <button type="submit">Delete</button>
+                        <input type="hidden" name="_method" value="delete"/>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <dialog id="addRouteDialog">
+        <form id="routeForm" th:action="@{/routes}" th:method="post">
+            <input type="text" id="routeName" name="name" required placeholder="Route Name" />
+
+            <div id="stopsContainer"></div>
+
+            <button type="submit">Save Route</button>
+            <button type="button" onclick="closeAddRouteDialog()">Cancel</button>
+        </form>
+    </dialog>
+
+    <template id="stopTemplate">
+        <div class="stop-entry">
+            <div>Order: <span class="stop-order"></span></div>
+            <select name="stops" required>
+                <option value="">Select a stop</option>
+                <option th:each="stop : ${bus_stops}" th:value="${stop.id}" th:text="${stop.name}"></option>
+            </select>
+            <input type="number" name="timeOffsets" placeholder="Time offset" required>
+            <input type="hidden" name="sequenceNumber">
+            <button type="button" onclick="addStopInput(this.parentElement)">Add</button>
+            <button type="button" onclick="removeStopInput(this)">Remove</button>
+        </div>
+    </template>
+
+    <script>
+        let stopCounter = 1;
+
+        function openAddRouteDialog() {
+            document.getElementById('routeForm').reset();
+            stopCounter = 1;
+            document.getElementById('stopsContainer').innerHTML = '';
+            addStopInput();
+            document.getElementById('addRouteDialog').showModal();
+        }
+
+
+        function closeAddRouteDialog() {
+            document.getElementById('addRouteDialog').close();
+        }
+
+        function addStopInput(beforeElement = null) {
+            let container = document.getElementById('stopsContainer');
+            let template = document.getElementById('stopTemplate').content.cloneNode(true);
+
+            template.querySelector('select[name="stops"]').name = 'routeStops[' + (stopCounter - 1) + '].stopId';
+            template.querySelector('input[name="timeOffsets"]').name = 'routeStops[' + (stopCounter - 1) + '].departureOffset';
+
+            let sequenceInput = template.querySelector('input[name="sequenceNumber"]');
+            sequenceInput.name = 'routeStops[' + (stopCounter - 1) + '].sequenceNumber';
+            sequenceInput.value = stopCounter;
+
+            template.querySelector('.stop-order').textContent = stopCounter;
+
+            if (beforeElement) {
+                beforeElement.after(template);
+            } else {
+                container.appendChild(template);
+            }
+
+            stopCounter++;
+            renumberStops();
+        }
+
+        function removeStopInput(button) {
+            let stopDiv = button.parentNode;
+            stopDiv.parentNode.removeChild(stopDiv);
+            renumberStops();
+        }
+
+        function renumberStops() {
+            let stops = document.querySelectorAll('.stop-entry');
+            stopCounter = 1;
+            stops.forEach(stop => {
+                stop.querySelector('.stop-order').textContent = stopCounter;
+                stopCounter++;
+            });
+        }
+    </script>
+</body>
+</html>
