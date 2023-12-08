@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 @AllArgsConstructor
 public class BusService {
     private final BusRepository busRepository;
@@ -24,16 +23,19 @@ public class BusService {
         return busRepository.findById(id);
     }
 
+    @Transactional
     public void addBus(Bus bus) {
         busRepository.save(bus);
     }
 
+    @Transactional
     public void deleteBus(Integer id) {
         Bus bus = busRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Bus with id " + id + " wasn't found"));
         busRepository.delete(bus);
     }
 
+    @Transactional
     public void patchBus(Integer id, Integer newSeatCapacity) {
         Bus bus = busRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Bus with id " + id + " wasn't found"));
