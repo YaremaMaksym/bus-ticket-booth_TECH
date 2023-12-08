@@ -19,10 +19,8 @@ public class Route {
     @Column(name = "route_id", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JoinColumn(name = "destination_stop_id")
-    private BusStop destinationBusStop;
+    @Column(name = "route_name", unique = true)
+    private String name;
 
     @OneToMany(mappedBy = "route")
     private Set<RouteStop> routeStops = new LinkedHashSet<>();

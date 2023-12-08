@@ -19,11 +19,8 @@ public class BusStop {
     @Column(name = "stop_id", nullable = false)
     private Integer id;
 
-    @Column(name = "stop_name")
+    @Column(name = "stop_name", unique = true)
     private String name;
-
-    @OneToMany(mappedBy = "destinationBusStop")
-    private Set<Route> routes = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "busStop")
     private Set<RouteStop> routeStops = new LinkedHashSet<>();
