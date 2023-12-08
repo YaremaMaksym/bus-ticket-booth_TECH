@@ -2,6 +2,7 @@ package com.yaremax.busticketbooth_tech.data;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -13,6 +14,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "buses")
+@NoArgsConstructor
 public class Bus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,4 +27,7 @@ public class Bus {
     @OneToMany(mappedBy = "bus")
     private Set<Schedule> schedules = new LinkedHashSet<>();
 
+    public Bus(Integer seatCapacity) {
+        this.seatCapacity = seatCapacity;
+    }
 }
