@@ -25,8 +25,8 @@ public class Route {
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<RouteStop> routeStops = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "route")
-    private Set<Schedule> schedules = new LinkedHashSet<>();
+//    @OneToMany(mappedBy = "route")
+//    private Set<Schedule> schedules = new LinkedHashSet<>();
 
     public Route(String name, Set<RouteStop> routeStops) {
         this.name = name;
