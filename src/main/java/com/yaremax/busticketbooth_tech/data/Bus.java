@@ -21,13 +21,14 @@ public class Bus {
     @Column(name = "bus_id", nullable = false)
     private Integer id;
 
+    @Column(name = "bus_serial_number", unique = true)
+    private String serialNumber;
+
     @Column(name = "seat_capacity")
     private Integer seatCapacity;
 
-    @OneToMany(mappedBy = "bus")
-    private Set<Schedule> schedules = new LinkedHashSet<>();
-
-    public Bus(Integer seatCapacity) {
+    public Bus(String serialNumber, Integer seatCapacity) {
+        this.serialNumber = serialNumber;
         this.seatCapacity = seatCapacity;
     }
 }

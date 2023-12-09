@@ -20,8 +20,9 @@ public class BusController {
     }
 
     @PostMapping
-    public String addBus(@RequestParam Integer seatCapacity) {
-        busService.addBus(new Bus(seatCapacity));
+    public String addBus(@RequestParam String serialNumber,
+                         @RequestParam Integer seatCapacity) {
+        busService.addBus(new Bus(serialNumber, seatCapacity));
         return "redirect:/buses";
     }
 
@@ -33,8 +34,9 @@ public class BusController {
 
     @PatchMapping("/{id}")
     public String patchBus(@PathVariable Integer id,
+                           @RequestParam String newSerialNumber,
                            @RequestParam Integer newSeatCapacity) {
-        busService.patchBus(id, newSeatCapacity);
+        busService.patchBus(id, newSerialNumber, newSeatCapacity);
         return "redirect:/buses";
     }
 }

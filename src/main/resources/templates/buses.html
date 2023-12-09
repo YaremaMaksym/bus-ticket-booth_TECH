@@ -7,6 +7,9 @@
 <body>
 
 <form th:action="@{/buses}" method="post">
+    <label for="serialNumber">Serial number:</label>
+    <input type="text" id="serialNumber" name="serialNumber" required>
+
     <label for="seatCapacity">Seat capacity:</label>
     <input type="number" id="seatCapacity" name="seatCapacity" required>
     <button type="submit">Add Bus</button>
@@ -16,7 +19,8 @@
     <thead>
     <tr>
         <th>Id</th>
-        <th>Seat Capacity</th>
+        <th>Serial number</th>
+        <th>Seat capacity</th>
         <th>Edit</th>
         <th>Remove</th>
     </tr>
@@ -24,9 +28,10 @@
     <tbody>
     <tr th:each="bus : ${buses}">
         <td th:text="${bus.id}"></td>
+        <td th:text="${bus.serialNumber}"></td>
         <td th:text="${bus.seatCapacity}"></td>
         <td>
-            <button type="button" th:attr="onclick=|openEditDialog('${bus.id}', '${bus.seatCapacity}')|">Edit</button>
+            <button type="button" th:attr="onclick=|openEditDialog('${bus.id}', '${bus.serialNumber}', '${bus.seatCapacity}')|">Edit</button>
         </td>
         <td>
             <form th:action="@{/buses/{id}(id=${bus.id})}" th:method="delete">
@@ -42,18 +47,23 @@
     <form th:method="patch">
         <input type="hidden" name="_method" value="patch"/>
         <input type="hidden" id="editId" name="id">
-        <label for="editSeatCapacity">Seat Capacity:</label>
-        <input type="number" id="editSeatCapacity" name="seatCapacity" required>
+
+        <label for="editSerialNumber">Serial number:</label>
+        <input type="text" id="editSerialNumber" name="newSerialNumber" required>
+
+        <label for="editSeatCapacity">Seat capacity:</label>
+        <input type="number" id="editSeatCapacity" name="newSeatCapacity" required>
+
         <button type="submit">Save changes</button>
         <button type="button" onclick="document.getElementById('editDialog').close()">Cancel</button>
     </form>
 </dialog>
 
 <script>
-    function openEditDialog(id, seatCapacity) {
-        console.log(id, seatCapacity);
+    function openEditDialog(id, newSerialNumber, newSeatCapacity) {
         document.getElementById('editId').value = id;
-        document.getElementById('editSeatCapacity').value = seatCapacity;
+        document.getElementById('editSerialNumber').value = newSerialNumber;
+        document.getElementById('editSeatCapacity').value = newSeatCapacity;
 
         var form = document.querySelector('#editDialog form');
         form.action = '/buses/' + id;
