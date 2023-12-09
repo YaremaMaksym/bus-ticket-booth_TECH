@@ -36,9 +36,10 @@ public class BusService {
     }
 
     @Transactional
-    public void patchBus(Integer id, Integer newSeatCapacity) {
+    public void patchBus(Integer id, String newSerialNumber, Integer newSeatCapacity) {
         Bus bus = busRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Bus with id " + id + " wasn't found"));
+        bus.setSerialNumber(newSerialNumber);
         // TODO: перевірка чи newSeatCapacity більше за кількість вже зайнятих місць, якщо так то всьо файно, нє - повідомлення
         bus.setSeatCapacity(newSeatCapacity);
         busRepository.save(bus);
