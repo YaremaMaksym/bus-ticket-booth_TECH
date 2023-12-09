@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Schedules</title>
+</head>
+<body>
+    <form id="addScheduleForm" th:action="@{/schedules}" th:method="post">
+
+        <select name="route" required>
+            <option value="">Select a route</option>
+            <option th:each="route : ${routes}" th:value="${route.id}" th:text="${route.name}"></option>
+        </select>
+        <select name="bus" required>
+            <option value="">Select a bus</option>
+            <option th:each="bus : ${busses}" th:value="${bus.id}" th:text="${bus.serialNumber}"></option>
+        </select>
+        <input type="time" id="departureTime" name="departureTime" required placeholder="HH:MM" />
+
+        <button type="submit">Add schedule</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Route name</th>
+<!--                TODO: додати повний перегляд? для того щоб проміжні пункти було видно-->
+                <th>Bus serial number</th>
+                <th>Available seats</th>
+                <th>Total seats</th>
+                <th>Departure time</th>
+                <th>Final destination</th>
+
+<!--                <th>TODO: Show boarding manifest</th>-->
+<!--                <th>TODO: Add ticket</th>-->
+
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="s : ${schedulesInfo}">
+                <td th:text="${s.id}"></td>
+                <td th:text="${s.route.name}"></td>
+                <td th:text="${s.bus.serialNumber}"></td>
+                <td th:text="${s.totalSeats}"></td>
+                <td th:text="${s.availableSeats}"></td>
+                <td th:text="${s.departureTime}"></td>
+                <td th:text="${s.finalDestinationName}"></td>
+                <td>
+                    <form th:action="@{/schedules/{id}(id=${s.id})}" th:method="delete">
+                        <button type="submit">Delete</button>
+                        <input type="hidden" name="_method" value="delete"/>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
