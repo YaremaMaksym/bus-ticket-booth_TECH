@@ -30,9 +30,9 @@ public class Schedule {
     @JoinColumn(name = "route_id")
     private Route route;
 
+    @Column(name = "departure_time")
+    private LocalTime departureTime;
 
-    @Column(name = "departure_datetime")
-    private Instant departureDatetime;
 
     @OneToMany(mappedBy = "schedule")
     private Set<BoardingManifest> boardingManifests = new LinkedHashSet<>();
