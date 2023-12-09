@@ -6,7 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.Instant;
+import java.time.LocalTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -30,8 +30,6 @@ public class Schedule {
     @JoinColumn(name = "route_id")
     private Route route;
 
-    @Column(name = "seats_occupied")
-    private Integer seatsOccupied;
 
     @Column(name = "departure_datetime")
     private Instant departureDatetime;
