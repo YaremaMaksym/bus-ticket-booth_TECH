@@ -1,8 +1,8 @@
 package com.yaremax.busticketbooth_tech.services;
 
-import com.yaremax.busticketbooth_tech.data.Schedule;
 import com.yaremax.busticketbooth_tech.data.Ticket;
 import com.yaremax.busticketbooth_tech.dto.TicketDto;
+import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.mappers.TicketMapper;
 import com.yaremax.busticketbooth_tech.repositories.TicketRepository;
 import lombok.AllArgsConstructor;
@@ -23,5 +23,12 @@ public class TicketService {
     public void addTicket(TicketDto ticketDto) {
         Ticket ticket = ticketMapper.toEntity(ticketDto);
         ticketRepository.save(ticket);
+    }
+
+    public void refundTicket(Integer ticketId) {
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ticket with id " + ticketId + " wasn't found"));
+        ticket.setTicketStatus("refunded");
+        ticketRepository.saveAndFlush(ticket);
     }
 }

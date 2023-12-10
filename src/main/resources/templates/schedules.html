@@ -24,7 +24,6 @@
             <tr>
                 <th>Id</th>
                 <th>Route name</th>
-<!--                TODO: додати повний перегляд? для того щоб проміжні пункти було видно-->
                 <th>Bus serial number</th>
                 <th>Available seats</th>
                 <th>Total seats</th>
@@ -32,6 +31,7 @@
                 <th>Final destination</th>
 
                 <th>Add ticket</th>
+                <th>Refund ticket</th>
                 <th>Show boarding manifest</th>
 
                 <th>Delete</th>
@@ -49,6 +49,11 @@
 
                 <td>
                     <button type="button" th:attr="onclick=|openAddTicketDialog('${s.id}', '${s.route.id}')|">Add ticket</button>
+                </td>
+                <td>
+                    <form th:action="@{/refunds/schedule/{scheduleId}/tickets(scheduleId=${s.id})}" method="get">
+                        <button type="submit">Refund ticket</button>
+                    </form>
                 </td>
                 <td>
                     <form th:action="@{/schedules/{id}/boarding-manifest(id=${s.id})}" method="get">
