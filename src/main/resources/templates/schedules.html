@@ -31,8 +31,8 @@
                 <th>Departure time</th>
                 <th>Final destination</th>
 
-<!--                <th>TODO: Show boarding manifest</th>-->
                 <th>Add ticket</th>
+                <th>Show boarding manifest</th>
 
                 <th>Delete</th>
             </tr>
@@ -46,9 +46,16 @@
                 <td th:text="${s.availableSeats}"></td>
                 <td th:text="${s.departureTime}"></td>
                 <td th:text="${s.finalDestinationName}"></td>
+
                 <td>
                     <button type="button" th:attr="onclick=|openAddTicketDialog('${s.id}', '${s.route.id}')|">Add ticket</button>
                 </td>
+                <td>
+                    <form th:action="@{/schedules/{id}/boarding-manifest(id=${s.id})}" method="get">
+                        <button type="submit">Show boarding manifest</button>
+                    </form>
+                </td>
+
                 <td>
                     <form th:action="@{/schedules/{id}(id=${s.id})}" th:method="delete">
                         <button type="submit">Delete</button>
@@ -75,6 +82,7 @@
             <input type="hidden" name="ticketStatus" value="booked"/>
             <input type="hidden" name="returnUrl" value="schedules"/>
 
+<!--            TODO: треба додати ціну-->
 
             <button type="submit">Add ticket</button>
             <button type="button" onclick="document.getElementById('addTicketDialog').close()">Cancel</button>

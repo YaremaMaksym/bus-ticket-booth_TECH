@@ -55,6 +55,7 @@
     <template id="stopTemplate">
         <div class="stop-entry">
             <div>Order: <span class="stop-order"></span></div>
+<!--            TODO: двічі одну зупинку додавати не можна-->
             <select name="stops" required>
                 <option value="">Select a stop</option>
                 <option th:each="stop : ${bus_stops}" th:value="${stop.id}" th:text="${stop.name}"></option>

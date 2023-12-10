@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Boarding manifest</title>
+</head>
+<body>
+    <h3>Tickets</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Seat number</th>
+                <th>Bus stop</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="t : ${tickets}">
+                <td th:text="${t.id}"></td>
+                <td th:text="${t.seatNumber}"></td>
+                <td th:text="${t.busStop.name}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

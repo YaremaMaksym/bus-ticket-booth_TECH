@@ -4,6 +4,7 @@ import com.yaremax.busticketbooth_tech.data.Schedule;
 import com.yaremax.busticketbooth_tech.services.BusService;
 import com.yaremax.busticketbooth_tech.services.RouteService;
 import com.yaremax.busticketbooth_tech.services.ScheduleService;
+import com.yaremax.busticketbooth_tech.services.TicketService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ScheduleController {
     private final ScheduleService scheduleService;
+    private final TicketService ticketService;
     private final BusService busService;
     private final RouteService routeService;
 
@@ -45,6 +47,12 @@ public class ScheduleController {
     @GetMapping("/{id}/available-seats")
     public ResponseEntity<List<Integer>> getAvailableSeats(@PathVariable Integer id) {
         return ResponseEntity.ok(scheduleService.getAvailableSeats(id));
+    }
+
+    @GetMapping("/{scheduleId}/boarding-manifest")
+    public String getBoardingManifestForSchedule(@PathVariable Integer scheduleId, Model model) {
+        model.addAttribute("tickets", ticketService.findAllByScheduleAndTicketStatus(scheduleId, "booked"));
+        return "boarding_manifest";
     }
 
 //    @PatchMapping("/{id}")
