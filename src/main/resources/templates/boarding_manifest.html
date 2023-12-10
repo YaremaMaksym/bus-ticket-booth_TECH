@@ -5,7 +5,19 @@
     <title>Boarding manifest</title>
 </head>
 <body>
+
+    <h3>Schedule info</h3>
+
+    <p>Route name: <span th:text="${schedule.route.name}"></span></p>
+    <p>Bus serial number: <span th:text="${schedule.bus.serialNumber}"></span></p>
+    <p>Available seats: <span th:text="${schedule.availableSeats}"></span></p>
+    <p>Total seats: <span th:text="${schedule.totalSeats}"></span></p>
+    <p>Departure time: <span th:text="${schedule.departureTime}"></span></p>
+    <p>Final destination: <span th:text="${schedule.finalDestinationName}"></span></p>
+    <p>Stops: <span th:text="${stops}"></span></p>
+
     <h3>Tickets</h3>
+
     <table>
         <thead>
             <tr>

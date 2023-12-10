@@ -1,6 +1,9 @@
 package com.yaremax.busticketbooth_tech.controllers;
 
+import com.yaremax.busticketbooth_tech.data.BusStop;
+import com.yaremax.busticketbooth_tech.data.RouteStop;
 import com.yaremax.busticketbooth_tech.data.Schedule;
+import com.yaremax.busticketbooth_tech.data.ScheduleInfo;
 import com.yaremax.busticketbooth_tech.services.BusService;
 import com.yaremax.busticketbooth_tech.services.RouteService;
 import com.yaremax.busticketbooth_tech.services.ScheduleService;
@@ -12,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/schedules")
@@ -51,7 +55,16 @@ public class ScheduleController {
 
     @GetMapping("/{scheduleId}/boarding-manifest")
     public String getBoardingManifestForSchedule(@PathVariable Integer scheduleId, Model model) {
+        ScheduleInfo scheduleInfo = scheduleService.findByIdScheduleInfo(scheduleId);
+        String stopsString = scheduleInfo.getRoute().getRouteStops().stream()
+                .map(RouteStop::getBusStop)
+                .map(BusStop::getName)
+                .collect(Collectors.joining(", "));
+
         model.addAttribute("tickets", ticketService.findAllByScheduleAndTicketStatus(scheduleId, "booked"));
+        model.addAttribute("schedule", scheduleInfo);
+        model.addAttribute("stops", stopsString);
+
         return "boarding_manifest";
     }
 
