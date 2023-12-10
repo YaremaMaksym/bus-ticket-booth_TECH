@@ -7,7 +7,6 @@ import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.repositories.ScheduleRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -55,7 +54,7 @@ public class ScheduleService {
             availableSeats.add(i);
         }
 
-        List<Ticket> bookedTickets = ticketService.findAllByScheduleAndTicketStatus(schedule, "booked");
+        List<Ticket> bookedTickets = ticketService.findAllByScheduleAndTicketStatus(scheduleId, "booked");
         for (Ticket ticket : bookedTickets) {
             availableSeats.remove(ticket.getSeatNumber());
         }

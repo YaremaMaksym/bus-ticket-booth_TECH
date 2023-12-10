@@ -16,8 +16,8 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final TicketMapper ticketMapper;
 
-    public List<Ticket> findAllByScheduleAndTicketStatus(Schedule schedule, String status) {
-        return ticketRepository.findByScheduleAndTicketStatus(schedule, status);
+    public List<Ticket> findAllByScheduleAndTicketStatus(Integer scheduleId, String status) {
+        return ticketRepository.findByScheduleIdAndTicketStatus(scheduleId, status);
     }
 
     public void addTicket(TicketDto ticketDto) {
