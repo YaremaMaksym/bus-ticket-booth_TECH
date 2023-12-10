@@ -33,11 +33,6 @@ public class Schedule {
     @Column(name = "departure_time")
     private LocalTime departureTime;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JoinColumn(name = "boarding_manifest_id")
-    private BoardingManifest boardingManifest;
-
     @OneToMany(mappedBy = "schedule")
     private Set<Ticket> tickets = new LinkedHashSet<>();
 
