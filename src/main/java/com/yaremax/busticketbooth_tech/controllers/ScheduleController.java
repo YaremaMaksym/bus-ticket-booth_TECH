@@ -5,9 +5,12 @@ import com.yaremax.busticketbooth_tech.services.BusService;
 import com.yaremax.busticketbooth_tech.services.RouteService;
 import com.yaremax.busticketbooth_tech.services.ScheduleService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/schedules")
@@ -35,6 +38,13 @@ public class ScheduleController {
     public String deleteSchedule(@PathVariable Integer id) {
         scheduleService.deleteSchedule(id);
         return "redirect:/schedules";
+    }
+
+    // TODO: можливо не той контроллер
+    @ResponseBody
+    @GetMapping("/{id}/available-seats")
+    public ResponseEntity<List<Integer>> getAvailableSeats(@PathVariable Integer id) {
+        return ResponseEntity.ok(scheduleService.getAvailableSeats(id));
     }
 
 //    @PatchMapping("/{id}")

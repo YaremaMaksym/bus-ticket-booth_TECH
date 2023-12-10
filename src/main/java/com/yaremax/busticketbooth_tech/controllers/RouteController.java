@@ -1,12 +1,16 @@
 package com.yaremax.busticketbooth_tech.controllers;
 
+import com.yaremax.busticketbooth_tech.data.BusStopInfo;
 import com.yaremax.busticketbooth_tech.dto.RouteDto;
 import com.yaremax.busticketbooth_tech.services.BusStopService;
 import com.yaremax.busticketbooth_tech.services.RouteService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/routes")
@@ -33,6 +37,12 @@ public class RouteController {
     public String deleteRoute(@PathVariable Integer id) {
         routeService.deleteRoute(id);
         return "redirect:/routes";
+    }
+
+    @ResponseBody
+    @GetMapping("/{id}/stops")
+    public ResponseEntity<List<BusStopInfo>> getStopsForRoute(@PathVariable Integer id) {
+        return ResponseEntity.ok(routeService.getStopsForRoute(id));
     }
 
 //    @PutMapping("/{id}")
