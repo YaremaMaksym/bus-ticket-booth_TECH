@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ticket refund</title>
+    </head>
+    <body>
+        <form th:action="@{/schedules}" method="get">
+            <button type="submit">Back</button>
+        </form>
+
+        <h3>Schedule info</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Seat number</th>
+                    <th>Bus stop</th>
+
+                    <th>Refund</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="t : ${tickets}">
+                    <td th:text="${t.id}"></td>
+                    <td th:text="${t.seatNumber}"></td>
+                    <td th:text="${t.busStop.name}"></td>
+
+                    <td>
+                        <form th:action="@{/refunds/schedule/{scheduleId}/tickets/{ticketId}(ticketId=${t.id}, scheduleId=${t.schedule.id})}" method="post">
+                            <button type="submit">Refund</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
