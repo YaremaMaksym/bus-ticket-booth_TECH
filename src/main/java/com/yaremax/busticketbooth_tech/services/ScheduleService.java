@@ -62,5 +62,9 @@ public class ScheduleService {
         return availableSeats;
     }
 
+    public ScheduleInfo findByIdScheduleInfo(Integer scheduleId) {
+        return scheduleRepository.findByIdScheduleInfo(scheduleId);
+    }
+
     // TODO: додати update
 }
