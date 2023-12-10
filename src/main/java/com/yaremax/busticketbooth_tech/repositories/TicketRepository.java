@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TicketRepository extends JpaRepository<Ticket, Integer> {
-    List<Ticket> findByScheduleAndTicketStatus(Schedule schedule, String status);
+    List<Ticket> findByScheduleIdAndTicketStatus(Integer id, String status);
 }
