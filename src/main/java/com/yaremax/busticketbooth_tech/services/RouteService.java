@@ -1,18 +1,16 @@
 package com.yaremax.busticketbooth_tech.services;
 
-import com.yaremax.busticketbooth_tech.data.Route;
-import com.yaremax.busticketbooth_tech.data.RouteStop;
-import com.yaremax.busticketbooth_tech.data.RouteStopId;
+import com.yaremax.busticketbooth_tech.data.*;
 import com.yaremax.busticketbooth_tech.dto.RouteDto;
 import com.yaremax.busticketbooth_tech.dto.RouteStopDto;
 import com.yaremax.busticketbooth_tech.mappers.RouteDtoMapper;
 import com.yaremax.busticketbooth_tech.repositories.RouteRepository;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
+import com.yaremax.busticketbooth_tech.repositories.RouteStopRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +19,7 @@ import java.util.Optional;
 public class RouteService {
     private final BusStopService busStopService;
     private final RouteRepository routeRepository;
+    private final RouteStopRepository routeStopRepository;
     private final RouteDtoMapper routeDtoMapper;
 
     public List<Route> findAll() {
@@ -60,6 +59,11 @@ public class RouteService {
         routeRepository.delete(route);
     }
 
+    public List<BusStopInfo> getStopsForRoute(Integer id) {
+        return routeStopRepository.findBusStopInfosByRouteId(id);
+    }
+
+    // TODO: додати update для route
 //    @Transactional
 //    public void updateRoute(Integer routeId, RouteDto routeDto) {
 //        Route existingRoute = routeRepository.findById(routeId)

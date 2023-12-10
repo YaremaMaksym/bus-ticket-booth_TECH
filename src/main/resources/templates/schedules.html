@@ -32,7 +32,7 @@
                 <th>Final destination</th>
 
 <!--                <th>TODO: Show boarding manifest</th>-->
-<!--                <th>TODO: Add ticket</th>-->
+                <th>Add ticket</th>
 
                 <th>Delete</th>
             </tr>
@@ -47,6 +47,9 @@
                 <td th:text="${s.departureTime}"></td>
                 <td th:text="${s.finalDestinationName}"></td>
                 <td>
+                    <button type="button" th:attr="onclick=|openAddTicketDialog('${s.id}', '${s.route.id}')|">Add ticket</button>
+                </td>
+                <td>
                     <form th:action="@{/schedules/{id}(id=${s.id})}" th:method="delete">
                         <button type="submit">Delete</button>
                         <input type="hidden" name="_method" value="delete"/>
@@ -55,5 +58,55 @@
             </tr>
         </tbody>
     </table>
+
+    <dialog id="addTicketDialog">
+        <form th:action="@{/tickets}" method="post">
+            <label for="selectStop">Select a stop:</label>
+            <select name="busStopId" id="selectStop" required>
+                <option value="">Select a stop</option>
+            </select>
+
+            <label for="selectSeat">Select a seat:</label>
+            <select name="seatNumber" id="selectSeat" required>
+                <option value="">Select a seat</option>
+            </select>
+
+            <input type="hidden" id="scheduleId" name="scheduleId" value=""/>
+            <input type="hidden" name="ticketStatus" value="booked"/>
+            <input type="hidden" name="returnUrl" value="schedules"/>
+
+
+            <button type="submit">Add ticket</button>
+            <button type="button" onclick="document.getElementById('addTicketDialog').close()">Cancel</button>
+        </form>
+    </dialog>
+
+    <script>
+        // TODO: передати параметром масив зупинок
+        function openAddTicketDialog(scheduleId, routeId) {
+            document.getElementById('scheduleId').value = scheduleId;
+
+            fetch(`/routes/${routeId}/stops`).then(function(response) {
+                return response.json();
+            }).then(function(busStops) {
+                var stopsSelect = document.getElementById('selectStop');
+                stopsSelect.innerHTML = busStops.map(function(stop) {
+                    return `<option value="${stop.id}">${stop.name}</option>`;
+                }).join('');
+            });
+
+
+            fetch(`/schedules/${scheduleId}/available-seats`).then(function(response) {
+                return response.json();
+            }).then(function(seats) {
+                var seatsSelect = document.getElementById('selectSeat');
+                seatsSelect.innerHTML = seats.map(function(seat) {
+                    return `<option value="${seat}">${seat}</option>`;
+                }).join('');
+            });
+
+            document.getElementById('addTicketDialog').showModal();
+        }
+    </script>
 </body>
 </html>
