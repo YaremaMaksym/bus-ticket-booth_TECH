@@ -73,21 +73,19 @@
 
     <dialog id="addTicketDialog">
         <form th:action="@{/tickets}" method="post">
+
+<!--            TODO: додати дефолтне значення на випадок якщо даних взагалі нема-->
             <label for="selectStop">Select a stop:</label>
-            <select name="busStopId" id="selectStop" required>
-                <option value="">Select a stop</option>
-            </select>
+            <select name="busStopId" id="selectStop" required></select>
 
             <label for="selectSeat">Select a seat:</label>
-            <select name="seatNumber" id="selectSeat" required>
-                <option value="">Select a seat</option>
-            </select>
+            <select name="seatNumber" id="selectSeat" required></select>
+
+            <p>Price: <span id="price-display"></span></p>
 
             <input type="hidden" id="scheduleId" name="scheduleId" value=""/>
             <input type="hidden" name="ticketStatus" value="booked"/>
             <input type="hidden" name="returnUrl" value="schedules"/>
-
-<!--            TODO: треба додати ціну-->
 
             <button type="submit">Add ticket</button>
             <button type="button" onclick="document.getElementById('addTicketDialog').close()">Cancel</button>
@@ -95,6 +93,17 @@
     </dialog>
 
     <script>
+        function calculatePrice(routeStops, stopIndex) {
+            console.log(routeStops, stopIndex);
+            let totalTime = 0;
+            for (let i = 0; i <= stopIndex; i++) {
+                totalTime += routeStops[i].departureOffset;
+            }
+            let price = 1.1 * totalTime;
+            document.getElementById('price-display').innerText = `${price}`;
+        }
+
+
         // TODO: передати параметром масив зупинок
         function openAddTicketDialog(scheduleId, routeId) {
             document.getElementById('scheduleId').value = scheduleId;
@@ -108,7 +117,6 @@
                 }).join('');
             });
 
-
             fetch(`/schedules/${scheduleId}/available-seats`).then(function(response) {
                 return response.json();
             }).then(function(seats) {
@@ -116,6 +124,33 @@
                 seatsSelect.innerHTML = seats.map(function(seat) {
                     return `<option value="${seat}">${seat}</option>`;
                 }).join('');
+            });
+
+
+            let routeStops = [];
+
+            fetch(`/routes/${routeId}/route-stops`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    routeStops = data;
+
+                    // calculating price for default stop (first) in select block
+                    let selectedStopIndex = document.getElementById('selectStop').selectedIndex;
+                    calculatePrice(routeStops, selectedStopIndex);
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+
+
+            document.getElementById('selectStop').addEventListener('change', function() {
+                let selectedStopIndex = this.selectedIndex;
+                calculatePrice(routeStops, selectedStopIndex);
             });
 
             document.getElementById('addTicketDialog').showModal();
