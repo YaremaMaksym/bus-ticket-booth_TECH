@@ -5,6 +5,16 @@
     <title>Schedules</title>
 </head>
 <body>
+
+    <form action="/schedules/search" method="get">
+        <label for="busStopSelect">Оберіть зупинку:</label>
+        <select name="busStopId" id="busStopSelect" required>
+            <option value="">Виберіть зупинку</option>
+            <option th:each="stop : ${stops}" th:value="${stop.id}" th:text="${stop.name}"></option>
+        </select>
+        <button type="submit">Пошук</button>
+    </form>
+
     <form id="addScheduleForm" th:action="@{/schedules}" th:method="post">
 
         <select name="route" required>
@@ -38,7 +48,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="s : ${schedulesInfo}">
+            <tr th:if="${schedulesInfo.isEmpty()}">
+                <td colspan="11">Немає доступних рейсів</td>
+            </tr>
+            <tr th:each="s : ${schedulesInfo}" th:unless="${schedulesInfo.isEmpty()}">
                 <td th:text="${s.id}"></td>
                 <td th:text="${s.route.name}"></td>
                 <td th:text="${s.bus.serialNumber}"></td>
