@@ -15,7 +15,7 @@ public class TicketController {
     // TODO: чи не треба перемістити це в інший контроллер?
     @PostMapping
     public String addTicket(@ModelAttribute TicketDto ticketDto,
-                            @RequestParam("returnUrl") String returnUrl) {
+                            @RequestParam String returnUrl) {
         ticketService.addTicket(ticketDto);
         return "redirect:" + returnUrl;
     }
