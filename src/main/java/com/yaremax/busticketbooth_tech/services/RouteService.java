@@ -63,6 +63,10 @@ public class RouteService {
         return routeStopRepository.findBusStopInfosByRouteId(id);
     }
 
+    public List<RouteStopInfo> getRouteStopsByRouteId(Integer routeId) {
+        return routeStopRepository.findRouteStopsByRouteId(routeId);
+    }
+
     // TODO: додати update для route
 //    @Transactional
 //    public void updateRoute(Integer routeId, RouteDto routeDto) {

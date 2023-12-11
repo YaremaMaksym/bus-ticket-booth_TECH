@@ -1,6 +1,7 @@
 package com.yaremax.busticketbooth_tech.controllers;
 
 import com.yaremax.busticketbooth_tech.data.BusStopInfo;
+import com.yaremax.busticketbooth_tech.data.RouteStopInfo;
 import com.yaremax.busticketbooth_tech.dto.RouteDto;
 import com.yaremax.busticketbooth_tech.services.BusStopService;
 import com.yaremax.busticketbooth_tech.services.RouteService;
@@ -43,6 +44,12 @@ public class RouteController {
     @GetMapping("/{id}/stops")
     public ResponseEntity<List<BusStopInfo>> getStopsForRoute(@PathVariable Integer id) {
         return ResponseEntity.ok(routeService.getStopsForRoute(id));
+    }
+
+    @ResponseBody
+    @GetMapping("/{routeId}/route-stops")
+    public ResponseEntity<List<RouteStopInfo>> getRouteStopsByRouteId(@PathVariable Integer routeId) {
+        return ResponseEntity.ok(routeService.getRouteStopsByRouteId(routeId));
     }
 
 //    @PutMapping("/{id}")
