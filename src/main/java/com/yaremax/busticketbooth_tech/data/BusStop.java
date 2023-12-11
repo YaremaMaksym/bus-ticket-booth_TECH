@@ -22,12 +22,6 @@ public class BusStop {
     @Column(name = "stop_name", unique = true)
     private String name;
 
-//    @OneToMany(mappedBy = "busStop")
-//    private Set<RouteStop> routeStops = new LinkedHashSet<>();
-
-//    @OneToMany(mappedBy = "busStop")
-//    private Set<Ticket> tickets = new LinkedHashSet<>();
-
     public BusStop(String name) {
         this.name = name;
     }
