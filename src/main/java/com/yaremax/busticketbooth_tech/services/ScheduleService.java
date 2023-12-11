@@ -1,18 +1,15 @@
 package com.yaremax.busticketbooth_tech.services;
 
-import com.yaremax.busticketbooth_tech.data.Schedule;
-import com.yaremax.busticketbooth_tech.data.ScheduleInfo;
-import com.yaremax.busticketbooth_tech.data.Ticket;
+import com.yaremax.busticketbooth_tech.data.*;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.repositories.ScheduleRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -34,11 +31,38 @@ public class ScheduleService {
     public List<ScheduleInfo> findAllScheduleInfo() {
         List<ScheduleInfo> allScheduleInfo = scheduleRepository.findAllScheduleInfo();
         LocalTime currentTime = LocalTime.now();
-
+//        LocalTime currentTime = LocalTime.MIN;
         return allScheduleInfo.stream()
                 .filter(s -> s.getDepartureTime().isAfter(currentTime))
                 .sorted(Comparator.comparing(ScheduleInfo::getDepartureTime))
                 .collect(Collectors.toList());
+    }
+
+
+    public Optional<List<ScheduleInfo>> findBestSchedulesToStop(Integer busStopId) {
+        List<ScheduleInfo> allScheduleInfo = findAllScheduleInfo();
+
+        return Optional.of(allScheduleInfo.stream()
+                .filter(schedule -> schedule.getRoute().getRouteStops() != null ||
+                                    schedule.getAvailableSeats() > 0)
+                .map(schedule -> {
+                    List<RouteStop> orderedRouteStops = schedule.getRoute().getRouteStops().stream()
+                            .sorted(Comparator.comparing(RouteStop::getSequenceNumber))
+                            .toList();
+
+                    int totalTime = 0;
+                    for (RouteStop rs : orderedRouteStops) {
+                        totalTime += rs.getDepartureOffset();
+                        if (rs.getBusStop().getId().equals(busStopId)) {
+                            return new AbstractMap.SimpleEntry<>(schedule, totalTime);
+                        }
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .sorted(Comparator.comparingInt(AbstractMap.SimpleEntry::getValue))
+                .map(AbstractMap.SimpleEntry::getKey)
+                .toList());
     }
 
     @Transactional

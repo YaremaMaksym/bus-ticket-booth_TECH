@@ -1,16 +1,14 @@
 package com.yaremax.busticketbooth_tech.controllers;
 
 import com.yaremax.busticketbooth_tech.data.*;
-import com.yaremax.busticketbooth_tech.services.BusService;
-import com.yaremax.busticketbooth_tech.services.RouteService;
-import com.yaremax.busticketbooth_tech.services.ScheduleService;
-import com.yaremax.busticketbooth_tech.services.TicketService;
+import com.yaremax.busticketbooth_tech.services.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,13 +18,25 @@ import java.util.stream.Collectors;
 public class ScheduleController {
     private final ScheduleService scheduleService;
     private final TicketService ticketService;
+    private final BusStopService busStopService;
     private final BusService busService;
     private final RouteService routeService;
 
     @GetMapping
-    public String getSchedules(Model model) {
+    public String showAllSchedules(Model model) {
         model.addAttribute("schedulesInfo", scheduleService.findAllScheduleInfo());
         model.addAttribute("busses", busService.findAll());
+        model.addAttribute("stops", busStopService.findAll());
+        model.addAttribute("routes", routeService.findAll());
+        return "schedules";
+    }
+
+    @GetMapping("/search")
+    public String showBestSchedulesToStop(Model model,
+                                         @RequestParam Integer busStopId) {
+        model.addAttribute("schedulesInfo", scheduleService.findBestSchedulesToStop(busStopId).orElse(Collections.emptyList()));
+        model.addAttribute("busses", busService.findAll());
+        model.addAttribute("stops", busStopService.findAll());
         model.addAttribute("routes", routeService.findAll());
         return "schedules";
     }
