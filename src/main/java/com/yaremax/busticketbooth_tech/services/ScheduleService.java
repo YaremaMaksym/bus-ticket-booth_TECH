@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -19,33 +20,40 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final TicketService ticketService;
 
-    public List<Schedule> findAll() {
-        return scheduleRepository.findAll();
+    public Schedule findById(Integer scheduleId) {
+        return scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule with id " + scheduleId + " wasn't found"));
     }
+
+    public ScheduleInfo findByIdScheduleInfo(Integer scheduleId) {
+        return scheduleRepository.findByIdScheduleInfo(scheduleId)
+                .orElseThrow(() -> new ResourceNotFoundException("Schedule with id " + scheduleId + " wasn't found"));
+    }
+
 
     public List<ScheduleInfo> findAllScheduleInfo() {
-        return scheduleRepository.findAllScheduleInfo();
-    }
+        List<ScheduleInfo> allScheduleInfo = scheduleRepository.findAllScheduleInfo();
+        LocalTime currentTime = LocalTime.now();
 
-    public Optional<Schedule> findById(Integer id) {
-        return scheduleRepository.findById(id);
-    }
-
-    @Transactional
-    public Schedule addSchedule(Schedule schedule) {
-        return scheduleRepository.save(schedule);
+        return allScheduleInfo.stream()
+                .filter(s -> s.getDepartureTime().isAfter(currentTime))
+                .sorted(Comparator.comparing(ScheduleInfo::getDepartureTime))
+                .collect(Collectors.toList());
     }
 
     @Transactional
-    public void deleteSchedule(Integer id) {
-        Schedule schedule = scheduleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule with id " + id + " wasn't found"));
+    public void addSchedule(Schedule schedule) {
+        scheduleRepository.save(schedule);
+    }
+
+    @Transactional
+    public void deleteSchedule(Integer scheduleId) {
+        Schedule schedule = findById(scheduleId);
         scheduleRepository.delete(schedule);
     }
 
     public List<Integer> getAvailableSeats(Integer scheduleId) {
-        Schedule schedule = scheduleRepository.findById(scheduleId)
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule with id " + scheduleId + " wasn't found"));
+        Schedule schedule = findById(scheduleId);
 
         int totalSeats = schedule.getBus().getSeatCapacity();
 
@@ -60,10 +68,6 @@ public class ScheduleService {
         }
 
         return availableSeats;
-    }
-
-    public ScheduleInfo findByIdScheduleInfo(Integer scheduleId) {
-        return scheduleRepository.findByIdScheduleInfo(scheduleId);
     }
 
     // TODO: додати update

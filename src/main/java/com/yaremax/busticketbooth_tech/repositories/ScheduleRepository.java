@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
 
@@ -70,6 +71,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
             "LEFT JOIN Ticket t ON t.schedule = s AND t.ticketStatus = 'booked' " +
             "WHERE s.id = ?1 " +
             "GROUP BY s.id, b.seatCapacity, r.name, s.departureTime, b.id, r.id")
-    ScheduleInfo findByIdScheduleInfo(Integer id);
+    Optional<ScheduleInfo> findByIdScheduleInfo(Integer id);
 
 }
