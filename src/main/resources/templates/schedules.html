@@ -40,7 +40,7 @@
                 <th>Departure date and time</th>
                 <th>Final destination</th>
 
-                <th>Add ticket</th>
+                <th>Add Ticket</th>
                 <th>Refund ticket</th>
                 <th>Show boarding manifest</th>
 
@@ -49,7 +49,7 @@
         </thead>
         <tbody>
             <tr th:if="${schedulesInfo.isEmpty()}">
-                <td colspan="11">Немає доступних рейсів</td>
+                <td colspan="11">No schedules available</td>
             </tr>
             <tr th:each="s : ${schedulesInfo}" th:unless="${schedulesInfo.isEmpty()}">
                 <td th:text="${s.id}"></td>
@@ -61,7 +61,7 @@
                 <td th:text="${s.finalDestinationName}"></td>
 
                 <td>
-                    <button type="button" th:attr="onclick=|openAddTicketDialog('${s.id}', '${s.route.id}')|">Add ticket</button>
+                    <button type="button" th:attr="onclick=|openAddTicketDialog('${s.id}', '${s.route.id}')|">Purchase ticket</button>
                 </td>
                 <td>
                     <form th:action="@{/refunds/schedule/{scheduleId}/tickets(scheduleId=${s.id})}" method="get">
@@ -100,7 +100,7 @@
             <input type="hidden" name="ticketStatus" value="booked"/>
             <input type="hidden" name="returnUrl" value="schedules"/>
 
-            <button type="submit">Add ticket</button>
+            <button type="submit">Add and show ticket</button>
             <button type="button" onclick="document.getElementById('addTicketDialog').close()">Cancel</button>
         </form>
     </dialog>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket info</title>
+</head>
+<body>
+    <form th:action="@{/schedules}" method="get">
+        <button type="submit">Schedules</button>
+    </form>
+
+    <h3>Ticket info</h3>
+    <p>Route name: <span th:text="${ticket.schedule.route.name}"></span></p>
+    <p>Bus serial number: <span th:text="${ticket.schedule.bus.serialNumber}"></span></p>
+    <p>Departure time: <span th:text="${#temporals.format(ticket.schedule.departureDateTime, 'yyyy-MM-dd HH:mm')}"></span></p>
+    <p>Ticket id: <span th:text="${ticket.id}"></span></p>
+    <p>Ticket status: <span th:text="${ticket.ticketStatus}"></span></p>
+    <p>Seat number: <span th:text="${ticket.seatNumber}"></span></p>
+    <p>Destination: <span th:text="${ticket.busStop.name}"></span></p>
+
+</body>
+</html>
