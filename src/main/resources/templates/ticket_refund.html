@@ -1,39 +1,53 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <title>Ticket refund</title>
-    </head>
-    <body>
-        <form th:action="@{/schedules}" method="get">
-            <button type="submit">Back</button>
+<head>
+    <meta charset="UTF-8">
+    <title>Ticket refund</title>
+</head>
+<body>
+    <div id="navigation-bar" style="display: flex;">
+        <form th:action="@{/bus_stops}" method="get">
+            <button type="submit">Bus stops page</button>
         </form>
 
-        <h3>Schedule info</h3>
+        <form th:action="@{/buses}" method="get">
+            <button type="submit">Buses page</button>
+        </form>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Seat number</th>
-                    <th>Bus stop</th>
+        <form th:action="@{/routes}" method="get">
+            <button type="submit">Routes page</button>
+        </form>
 
-                    <th>Refund</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="t : ${tickets}">
-                    <td th:text="${t.id}"></td>
-                    <td th:text="${t.seatNumber}"></td>
-                    <td th:text="${t.busStop.name}"></td>
+        <form th:action="@{/schedules}" method="get">
+            <button type="submit">Schedules page</button>
+        </form>
+    </div>
 
-                    <td>
-                        <form th:action="@{/refunds/schedule/{scheduleId}/tickets/{ticketId}(ticketId=${t.id}, scheduleId=${t.schedule.id})}" method="post">
-                            <button type="submit">Refund</button>
-                        </form>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </body>
+    <h3>Schedule info</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Seat number</th>
+                <th>Bus stop</th>
+
+                <th>Refund</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="t : ${tickets}">
+                <td th:text="${t.id}"></td>
+                <td th:text="${t.seatNumber}"></td>
+                <td th:text="${t.busStop.name}"></td>
+
+                <td>
+                    <form th:action="@{/refunds/schedule/{scheduleId}/tickets/{ticketId}(ticketId=${t.id}, scheduleId=${t.schedule.id})}" method="post">
+                        <button type="submit">Refund</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
 </html>

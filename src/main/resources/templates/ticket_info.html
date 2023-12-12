@@ -5,9 +5,23 @@
     <title>Ticket info</title>
 </head>
 <body>
-    <form th:action="@{/schedules}" method="get">
-        <button type="submit">Schedules</button>
-    </form>
+    <div id="navigation-bar" style="display: flex;">
+        <form th:action="@{/bus_stops}" method="get">
+            <button type="submit">Bus stops page</button>
+        </form>
+
+        <form th:action="@{/buses}" method="get">
+            <button type="submit">Buses page</button>
+        </form>
+
+        <form th:action="@{/routes}" method="get">
+            <button type="submit">Routes page</button>
+        </form>
+
+        <form th:action="@{/schedules}" method="get">
+            <button type="submit">Schedules page</button>
+        </form>
+    </div>
 
     <h3>Ticket info</h3>
     <p>Route name: <span th:text="${ticket.schedule.route.name}"></span></p>
