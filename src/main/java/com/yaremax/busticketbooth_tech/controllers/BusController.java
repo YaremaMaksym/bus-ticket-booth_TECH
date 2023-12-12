@@ -1,15 +1,11 @@
 package com.yaremax.busticketbooth_tech.controllers;
 
 import com.yaremax.busticketbooth_tech.data.Bus;
-import com.yaremax.busticketbooth_tech.enums.ValidationError;
 import com.yaremax.busticketbooth_tech.services.BusService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/buses")
