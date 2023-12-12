@@ -16,18 +16,22 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final TicketMapper ticketMapper;
 
+    public Ticket findById(Integer ticketId) {
+        return ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new ResourceNotFoundException("Ticket with id " + ticketId + " wasn't found"));
+    }
+
     public List<Ticket> findAllByScheduleAndTicketStatus(Integer scheduleId, String status) {
         return ticketRepository.findByScheduleIdAndTicketStatus(scheduleId, status);
     }
 
-    public void addTicket(TicketDto ticketDto) {
+    public Ticket addTicket(TicketDto ticketDto) {
         Ticket ticket = ticketMapper.toEntity(ticketDto);
-        ticketRepository.save(ticket);
+        return ticketRepository.save(ticket);
     }
 
     public void refundTicket(Integer ticketId) {
-        Ticket ticket = ticketRepository.findById(ticketId)
-                .orElseThrow(() -> new ResourceNotFoundException("Ticket with id " + ticketId + " wasn't found"));
+        Ticket ticket = findById(ticketId);
         ticket.setTicketStatus("refunded");
         ticketRepository.saveAndFlush(ticket);
     }
