@@ -63,14 +63,10 @@ public class ScheduleController {
     @GetMapping("/{scheduleId}/boarding-manifest")
     public String getBoardingManifestForSchedule(@PathVariable Integer scheduleId, Model model) {
         ScheduleInfo scheduleInfo = scheduleService.findByIdScheduleInfo(scheduleId);
-        String stopsString = scheduleInfo.getRoute().getRouteStops().stream()
-                .map(RouteStop::getBusStop)
-                .map(BusStop::getName)
-                .collect(Collectors.joining(", "));
 
         model.addAttribute("tickets", ticketService.findAllByScheduleAndTicketStatus(scheduleId, "booked"));
         model.addAttribute("schedule", scheduleInfo);
-        model.addAttribute("stops", stopsString);
+        model.addAttribute("routeStops", scheduleInfo.getRoute().getRouteStops());
 
         return "boarding_manifest";
     }
