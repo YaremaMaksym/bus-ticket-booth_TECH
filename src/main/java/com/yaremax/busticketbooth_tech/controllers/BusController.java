@@ -26,7 +26,6 @@ public class BusController {
     @PostMapping
     public String addBus(@RequestParam String serialNumber,
                          @RequestParam Integer seatCapacity) {
-//        TODO: Add dto
         busService.addBus(new Bus(serialNumber, seatCapacity));
         return "redirect:/buses";
     }
