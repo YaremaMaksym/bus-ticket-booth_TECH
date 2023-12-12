@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -26,8 +25,9 @@ public class RouteService {
         return routeRepository.findAll();
     }
 
-    public Optional<Route> findById(Integer id) {
-        return routeRepository.findById(id);
+    public Route findById(Integer id) {
+        return routeRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Route with id " + id + " wasn't found"));
     }
 
     @Transactional
@@ -54,8 +54,7 @@ public class RouteService {
 
     @Transactional
     public void deleteRoute(Integer id) {
-        Route route = routeRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Route with id " + id + " wasn't found"));
+        Route route = findById(id);
         routeRepository.delete(route);
     }
 
@@ -74,7 +73,7 @@ public class RouteService {
 //                .orElseThrow(() -> new ResourceNotFoundException("Route with id " + routeId + " wasn't found"));
 //
 //        existingRoute.setName(routeDto.getName());
-//        // TODO: Видалення існуючих зупинок може бути необхідно
+//        // Видалення існуючих зупинок може бути необхідно
 //
 //        existingRoute.setRouteStops(routeDtoMapper.toEntity(routeDto).getRouteStops());
 //
