@@ -1,6 +1,7 @@
 package com.yaremax.busticketbooth_tech.services;
 
 import com.yaremax.busticketbooth_tech.data.BusStop;
+import com.yaremax.busticketbooth_tech.exception.DuplicateResourceException;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.repositories.BusStopRepository;
 import jakarta.transaction.Transactional;
@@ -25,6 +26,9 @@ public class BusStopService {
 
     @Transactional
     public void addBusStop(BusStop busStop) {
+        if (busStopRepository.existsByName(busStop.getName())) {
+            throw new DuplicateResourceException("A bus stop with the name '" + busStop.getName() + "' already exists.");
+        }
         busStopRepository.save(busStop);
     }
 
@@ -35,9 +39,12 @@ public class BusStopService {
     }
 
     @Transactional
-    public void patchBusStop(Integer busStopId, String name) {
+    public void patchBusStop(Integer busStopId, String newName) {
         BusStop busStop = findById(busStopId);
-        busStop.setName(name);
+        if (!busStop.getName().equals(newName) && busStopRepository.existsByName(newName)) {
+            throw new DuplicateResourceException("A bus stop with the name '" + newName + "' already exists.");
+        }
+        busStop.setName(newName);
         busStopRepository.save(busStop);
     }
 }

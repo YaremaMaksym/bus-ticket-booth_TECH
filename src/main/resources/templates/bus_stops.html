@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Bus stops</title>
+    <style>
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <div id="navigation-bar" style="display: flex;">
@@ -22,6 +28,9 @@
             <button type="submit">Schedules page</button>
         </form>
     </div>
+
+    <div th:if="${error}" class="error-message" th:text="${error}"></div>
+
 
     <form th:action="@{/bus_stops}" method="post">
         <label for="name">Name:</label>
