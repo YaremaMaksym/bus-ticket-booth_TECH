@@ -1,7 +1,9 @@
 package com.yaremax.busticketbooth_tech.services;
 
 import com.yaremax.busticketbooth_tech.data.*;
+import com.yaremax.busticketbooth_tech.dto.RouteStopDto;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
+import com.yaremax.busticketbooth_tech.mappers.RouteStopDtoMapper;
 import com.yaremax.busticketbooth_tech.repositories.ScheduleRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final TicketService ticketService;
+    private final RouteStopDtoMapper routeStopDtoMapper;
 
     public Schedule findById(Integer scheduleId) {
         return scheduleRepository.findById(scheduleId)
@@ -62,6 +65,23 @@ public class ScheduleService {
                 .sorted(Comparator.comparingInt(AbstractMap.SimpleEntry::getValue))
                 .map(AbstractMap.SimpleEntry::getKey)
                 .toList());
+    }
+
+    public List<RouteStopDto> getRouteStopDtosWithArrivalTime(Integer scheduleId) {
+        Schedule schedule = findById(scheduleId);
+        List<RouteStopDto> routeStopDtos = routeStopDtoMapper.toSortedDtoList(schedule.getRoute().getRouteStops().stream().toList());
+
+        int totalTime = 0;
+
+        for (RouteStopDto rs : routeStopDtos) {
+            totalTime += rs.getDepartureOffset();
+
+            LocalDateTime arrivalTime = schedule.getDepartureDateTime().plusMinutes(totalTime);
+
+            rs.setArrivalDateTime(arrivalTime);
+        }
+
+        return routeStopDtos;
     }
 
     @Transactional

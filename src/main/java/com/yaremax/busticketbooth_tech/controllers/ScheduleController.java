@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/schedules")
@@ -62,19 +61,10 @@ public class ScheduleController {
 
     @GetMapping("/{scheduleId}/boarding-manifest")
     public String getBoardingManifestForSchedule(@PathVariable Integer scheduleId, Model model) {
-        ScheduleInfo scheduleInfo = scheduleService.findByIdScheduleInfo(scheduleId);
-
         model.addAttribute("tickets", ticketService.findAllByScheduleAndTicketStatus(scheduleId, "booked"));
-        model.addAttribute("schedule", scheduleInfo);
-        model.addAttribute("routeStops", scheduleInfo.getRoute().getRouteStops());
+        model.addAttribute("schedule", scheduleService.findByIdScheduleInfo(scheduleId));
+        model.addAttribute("routeStops", scheduleService.getRouteStopDtosWithArrivalTime(scheduleId));
 
         return "boarding_manifest";
     }
-
-//    @PatchMapping("/{id}")
-//    public String updateSchedule(@PathVariable Integer id,
-//                                 @ModelAttribute Schedule scheduleDetails) {
-//        scheduleService.updateSchedule(id, scheduleDetails);
-//        return "redirect:/schedules";
-//    }
 }

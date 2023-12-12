@@ -5,27 +5,33 @@
     <title>Boarding manifest</title>
 </head>
 <body>
+    <form th:action="@{/schedules}" method="get">
+        <button type="submit">Schedules</button>
+    </form>
 
     <h3>Schedule info</h3>
+    <p>Schedule id: <span th:text="${schedule.id}"></span></p>
     <p>Route name: <span th:text="${schedule.route.name}"></span></p>
     <p>Bus serial number: <span th:text="${schedule.bus.serialNumber}"></span></p>
     <p>Available seats: <span th:text="${schedule.availableSeats}"></span></p>
     <p>Total seats: <span th:text="${schedule.totalSeats}"></span></p>
-    <p>Departure time: <span th:text="${#temporals.format(schedule.departureDateTime, 'yyyy-MM-dd HH:mm')}"></span></p>
+    <p>Departure time: <span id="departureTime" th:text="${#temporals.format(schedule.departureDateTime, 'yyyy-MM-dd HH:mm')}"></span></p>
     <p>Final destination: <span th:text="${schedule.finalDestinationName}"></span></p>
 
     <h3>Stops</h3>
     <table>
         <thead>
             <tr>
+                <th>Stop order</th>
                 <th>Stop name</th>
                 <th>Arrival time</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="rs : ${routeStops}">
+                <td th:text="${rs.sequenceNumber}"></td>
                 <td th:text="${rs.busStop.name}"></td>
-                <td th:text="${#temporals.format(schedule.departureDateTime.plusMinutes(rs.departureOffset), 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${#temporals.format(rs.arrivalDateTime, 'yyyy-MM-dd HH:mm')}"></td>
             </tr>
         </tbody>
     </table>
