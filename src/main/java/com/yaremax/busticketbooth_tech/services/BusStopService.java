@@ -8,7 +8,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,8 +18,9 @@ public class BusStopService {
         return busStopRepository.findAll();
     }
 
-    public Optional<BusStop> findById(Integer id) {
-        return busStopRepository.findById(id);
+    public BusStop findById(Integer busStopId) {
+        return busStopRepository.findById(busStopId)
+                .orElseThrow(() -> new ResourceNotFoundException("Bus stop with id " + busStopId + " wasn't found"));
     }
 
     @Transactional
@@ -29,16 +29,14 @@ public class BusStopService {
     }
 
     @Transactional
-    public void deleteBusStop(Integer id) {
-        BusStop busStop = busStopRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Bus stop with id " + id + " wasn't found"));
+    public void deleteBusStop(Integer busStopId) {
+        BusStop busStop = findById(busStopId);
         busStopRepository.delete(busStop);
     }
 
     @Transactional
-    public void patchBusStop(Integer id, String name) {
-        BusStop busStop = busStopRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Bus stop with id " + id + " wasn't found"));
+    public void patchBusStop(Integer busStopId, String name) {
+        BusStop busStop = findById(busStopId);
         busStop.setName(name);
         busStopRepository.save(busStop);
     }
