@@ -5,6 +5,7 @@ import com.yaremax.busticketbooth_tech.dto.TicketDto;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.mappers.TicketMapper;
 import com.yaremax.busticketbooth_tech.repositories.TicketRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +26,13 @@ public class TicketService {
         return ticketRepository.findByScheduleIdAndTicketStatus(scheduleId, status);
     }
 
+    @Transactional
     public Ticket addTicket(TicketDto ticketDto) {
         Ticket ticket = ticketMapper.toEntity(ticketDto);
         return ticketRepository.save(ticket);
     }
 
+    @Transactional
     public void refundTicket(Integer ticketId) {
         Ticket ticket = findById(ticketId);
         ticket.setTicketStatus("refunded");
