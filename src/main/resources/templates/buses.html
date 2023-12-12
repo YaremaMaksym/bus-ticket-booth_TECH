@@ -2,7 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Buses</title>
+    <title>Manage Buses</title>
+    <style>
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <div id="navigation-bar" style="display: flex;">
@@ -23,13 +29,15 @@
         </form>
     </div>
 
-    <form th:action="@{/buses}" method="post">
-        <label for="serialNumber">Serial number:</label>
-        <input type="text" id="serialNumber" name="serialNumber" required>
+    <div th:if="${error}" class="error-message" th:text="${error}"></div>
 
-        <label for="seatCapacity">Seat capacity:</label>
-        <input type="number" id="seatCapacity" name="seatCapacity" required>
-        <button type="submit">Add Bus</button>
+    <form th:action="@{/buses}" method="post">
+        <label for="serialNumber">Bus Serial Number:</label>
+        <input type="text" id="serialNumber" name="serialNumber" placeholder="Enter bus serial number" required>
+
+        <label for="seatCapacity">Total Seats Available:</label>
+        <input type="number" id="seatCapacity" name="seatCapacity" placeholder="Enter total seats capacity" required min="1">
+        <button type="submit">Add New Bus</button>
     </form>
 
     <table>

@@ -1,11 +1,15 @@
 package com.yaremax.busticketbooth_tech.controllers;
 
 import com.yaremax.busticketbooth_tech.data.Bus;
+import com.yaremax.busticketbooth_tech.enums.ValidationError;
 import com.yaremax.busticketbooth_tech.services.BusService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/buses")
@@ -21,8 +25,10 @@ public class BusController {
 
     @PostMapping
     public String addBus(@RequestParam String serialNumber,
-                         @RequestParam Integer seatCapacity) {
-        busService.addBus(new Bus(serialNumber, seatCapacity));
+                         @RequestParam Integer seatCapacity,
+                         RedirectAttributes redirectAttributes) {
+        Optional<ValidationError> error = busService.addBus(new Bus(serialNumber, seatCapacity));
+        error.ifPresent(e -> redirectAttributes.addFlashAttribute("error", e.getMessage()));
         return "redirect:/buses";
     }
 
@@ -35,8 +41,10 @@ public class BusController {
     @PatchMapping("/{id}")
     public String patchBus(@PathVariable Integer id,
                            @RequestParam String newSerialNumber,
-                           @RequestParam Integer newSeatCapacity) {
-        busService.patchBus(id, newSerialNumber, newSeatCapacity);
+                           @RequestParam Integer newSeatCapacity,
+                           RedirectAttributes redirectAttributes) {
+        Optional<ValidationError> error = busService.patchBus(id, newSerialNumber, newSeatCapacity);
+        error.ifPresent(e -> redirectAttributes.addFlashAttribute("error", e.getMessage()));
         return "redirect:/buses";
     }
 }
