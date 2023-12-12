@@ -5,9 +5,22 @@
     <title>Main page</title>
 </head>
 <body>
-    <a href="/bus_stops">Bus stops</a>
-    <a href="/buses">Buses</a>
-    <a href="/routes">Routes</a>
-    <a href="/schedules">Schedules</a>
+    <div id="navigation-bar" style="display: flex;">
+        <form th:action="@{/bus_stops}" method="get">
+            <button type="submit">Bus stops page</button>
+        </form>
+
+        <form th:action="@{/buses}" method="get">
+            <button type="submit">Buses page</button>
+        </form>
+
+        <form th:action="@{/routes}" method="get">
+            <button type="submit">Routes page</button>
+        </form>
+
+        <form th:action="@{/schedules}" method="get">
+            <button type="submit">Schedules page</button>
+        </form>
+    </div>
 </body>
 </html>
