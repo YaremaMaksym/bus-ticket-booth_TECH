@@ -1,8 +1,9 @@
 package com.yaremax.busticketbooth_tech.services;
 
 import com.yaremax.busticketbooth_tech.data.Bus;
-import com.yaremax.busticketbooth_tech.enums.ValidationError;
+import com.yaremax.busticketbooth_tech.exception.DuplicateResourceException;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
+import com.yaremax.busticketbooth_tech.exception.ValidationException;
 import com.yaremax.busticketbooth_tech.repositories.BusRepository;
 import com.yaremax.busticketbooth_tech.repositories.TicketRepository;
 import jakarta.transaction.Transactional;
@@ -10,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -28,12 +28,11 @@ public class BusService {
     }
 
     @Transactional
-    public Optional<ValidationError> addBus(Bus bus) {
+    public void addBus(Bus bus) {
         if (busRepository.existsBySerialNumber(bus.getSerialNumber())) {
-            return Optional.of(ValidationError.SERIAL_NUMBER_EXISTS);
+            throw new DuplicateResourceException("Serial number already exists.");
         }
         busRepository.save(bus);
-        return Optional.empty();
     }
 
     @Transactional
@@ -43,21 +42,19 @@ public class BusService {
     }
 
     @Transactional
-    public Optional<ValidationError> patchBus(Integer busId,
-                                              String newSerialNumber,
-                                              Integer newSeatCapacity) {
+    public void patchBus(Integer busId, String newSerialNumber, Integer newSeatCapacity) {
         Bus bus = findById(busId);
 
         if (!bus.getSerialNumber().equals(newSerialNumber) && busRepository.existsBySerialNumber(newSerialNumber)) {
-            return Optional.of(ValidationError.SERIAL_NUMBER_EXISTS);
+            throw new DuplicateResourceException("Serial number already exists.");
         }
         if (newSeatCapacity < ticketRepository.countTicketsForScheduleByBusSerialNumber(busId)) {
-            return Optional.of(ValidationError.INVALID_SEAT_CAPACITY);
+            throw new ValidationException("Invalid seat capacity: less than the number of sold tickets.");
         }
 
         bus.setSerialNumber(newSerialNumber);
         bus.setSeatCapacity(newSeatCapacity);
         busRepository.save(bus);
-        return Optional.empty();
     }
 }
+
