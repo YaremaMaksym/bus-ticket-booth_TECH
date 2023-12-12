@@ -1,5 +1,5 @@
 package com.yaremax.busticketbooth_tech.data;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 /**
  * Projection for {@link Schedule}
@@ -13,7 +13,7 @@ public interface ScheduleInfo {
 
     String getFinalDestinationName();
 
-    LocalTime getDepartureTime();
+    LocalDateTime getDepartureDateTime();
 
     Bus getBus();
 

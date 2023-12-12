@@ -32,16 +32,15 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
             "    )" +
             "  ) as availableSeats, " +
             "  b.seatCapacity as totalSeats, " +
-            "  s.departureTime as departureTime, " +
+            "  s.departureDateTime as departureDateTime, " +
             "  s.bus as bus, " +
             "  s.route as route " +
             "FROM Schedule s " +
             "JOIN s.bus b " +
             "JOIN s.route r " +
             "LEFT JOIN Ticket t ON t.schedule.id = s.id AND t.ticketStatus = 'booked' " +
-            "GROUP BY s.id, b.seatCapacity, r.name, s.departureTime, b.id, r.id")
+            "GROUP BY s.id, b.seatCapacity, r.name, s.departureDateTime, b.id, r.id")
     List<ScheduleInfo> findAllScheduleInfo();
-
 
     @Query("SELECT " +
             "  s.id as id, " +
@@ -62,7 +61,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
             "    )" +
             "  ) as availableSeats, " +
             "  b.seatCapacity as totalSeats, " +
-            "  s.departureTime as departureTime, " +
+            "  s.departureDateTime as departureDateTime, " +
             "  s.bus as bus, " +
             "  s.route as route " +
             "FROM Schedule s " +
@@ -70,7 +69,8 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Integer> {
             "JOIN s.route r " +
             "LEFT JOIN Ticket t ON t.schedule = s AND t.ticketStatus = 'booked' " +
             "WHERE s.id = ?1 " +
-            "GROUP BY s.id, b.seatCapacity, r.name, s.departureTime, b.id, r.id")
+            "GROUP BY s.id, b.seatCapacity, r.name, s.departureDateTime, b.id, r.id")
     Optional<ScheduleInfo> findByIdScheduleInfo(Integer id);
+
 
 }

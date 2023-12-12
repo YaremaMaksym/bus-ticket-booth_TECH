@@ -7,7 +7,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -30,11 +30,10 @@ public class ScheduleService {
 
     public List<ScheduleInfo> findAllScheduleInfo() {
         List<ScheduleInfo> allScheduleInfo = scheduleRepository.findAllScheduleInfo();
-        LocalTime currentTime = LocalTime.now();
-//        LocalTime currentTime = LocalTime.MIN;
+        LocalDateTime currentTime = LocalDateTime.now();
         return allScheduleInfo.stream()
-                .filter(s -> s.getDepartureTime().isAfter(currentTime))
-                .sorted(Comparator.comparing(ScheduleInfo::getDepartureTime))
+                .filter(s -> s.getDepartureDateTime().isAfter(currentTime))
+                .sorted(Comparator.comparing(ScheduleInfo::getDepartureDateTime))
                 .collect(Collectors.toList());
     }
 
