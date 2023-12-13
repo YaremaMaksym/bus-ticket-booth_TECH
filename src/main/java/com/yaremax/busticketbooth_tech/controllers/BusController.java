@@ -1,11 +1,16 @@
 package com.yaremax.busticketbooth_tech.controllers;
 
 import com.yaremax.busticketbooth_tech.data.Bus;
+import com.yaremax.busticketbooth_tech.projections.BusInfo;
 import com.yaremax.busticketbooth_tech.services.BusService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/buses")
@@ -38,5 +43,11 @@ public class BusController {
                            @RequestParam Integer newSeatCapacity) {
         busService.patchBus(id, newSerialNumber, newSeatCapacity);
         return "redirect:/buses";
+    }
+
+    @ResponseBody
+    @GetMapping("/find-available")
+    public ResponseEntity<List<BusInfo>> getAvailableBusInfos(@RequestParam LocalDateTime inputDateTime) {
+        return ResponseEntity.ok(busService.findAvailableBusInfosByTime(inputDateTime));
     }
 }
