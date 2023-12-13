@@ -51,7 +51,6 @@ public class ScheduleController {
         return "redirect:/schedules";
     }
 
-    // TODO: можливо не той контроллер
     @ResponseBody
     @GetMapping("/{id}/available-seats")
     public ResponseEntity<List<Integer>> getAvailableSeats(@PathVariable Integer id) {
