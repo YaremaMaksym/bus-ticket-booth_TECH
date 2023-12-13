@@ -127,8 +127,8 @@
             for (let i = 0; i <= stopIndex; i++) {
                 totalTime += routeStops[i].departureOffset;
             }
-            let price = 1.1 * totalTime;
-            document.getElementById('price-display').innerText = `${price}`;
+            let roundedPrice = Math.round(1.1 * totalTime);
+            document.getElementById('price-display').innerText = `${roundedPrice}`;
         }
 
         function openAddTicketDialog(scheduleId, routeId) {
