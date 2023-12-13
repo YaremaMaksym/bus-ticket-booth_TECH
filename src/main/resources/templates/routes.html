@@ -60,10 +60,12 @@
 
     <dialog id="addRouteDialog">
         <form id="routeForm" th:action="@{/routes}" th:method="post">
-            <input type="text" id="routeName" name="name" required placeholder="Route Name" />
+            <label for="routeName">Route Name:</label>
+            <input type="text" id="routeName" name="name" required placeholder="Enter route name" />
 
             <div id="stopsContainer"></div>
 
+            <button type="button" onclick="addNewStop()">Add New Stop</button>
             <button type="submit">Save Route</button>
             <button type="button" onclick="closeAddRouteDialog()">Cancel</button>
         </form>
@@ -71,72 +73,60 @@
 
     <template id="stopTemplate">
         <div class="stop-entry">
-            <div>Order: <span class="stop-order"></span></div>
-<!--            TODO: двічі одну зупинку додавати не можна-->
-            <select name="stops" required>
+            <span class="stop-order" id="stopOrder"></span>
+            <select id="input-stops" required>
                 <option value="">Select a stop</option>
                 <option th:each="stop : ${bus_stops}" th:value="${stop.id}" th:text="${stop.name}"></option>
             </select>
-            <input type="number" name="timeOffsets" placeholder="Time offset" required>
-            <input type="hidden" name="sequenceNumber">
-            <button type="button" onclick="addStopInput(this.parentElement)">Add</button>
+            <input id="input-departureOffset" type="number" placeholder="Time from last stop (min)" required>
+            <input id="input-sequenceNumber" type="hidden">
             <button type="button" onclick="removeStopInput(this)">Remove</button>
         </div>
     </template>
 
     <script>
-        let stopCounter = 1;
-
         function openAddRouteDialog() {
             document.getElementById('routeForm').reset();
             stopCounter = 1;
             document.getElementById('stopsContainer').innerHTML = '';
-            addStopInput();
+            addNewStop();
             document.getElementById('addRouteDialog').showModal();
         }
-
 
         function closeAddRouteDialog() {
             document.getElementById('addRouteDialog').close();
         }
 
-        function addStopInput(beforeElement = null) {
+        function addNewStop() {
             let container = document.getElementById('stopsContainer');
             let template = document.getElementById('stopTemplate').content.cloneNode(true);
 
-            template.querySelector('select[name="stops"]').name = 'routeStops[' + (stopCounter - 1) + '].stopId';
-            template.querySelector('input[name="timeOffsets"]').name = 'routeStops[' + (stopCounter - 1) + '].departureOffset';
-
-            let sequenceInput = template.querySelector('input[name="sequenceNumber"]');
-            sequenceInput.name = 'routeStops[' + (stopCounter - 1) + '].sequenceNumber';
-            sequenceInput.value = stopCounter;
-
-            template.querySelector('.stop-order').textContent = stopCounter;
-
-            if (beforeElement) {
-                beforeElement.after(template);
-            } else {
-                container.appendChild(template);
-            }
+            assignParamsToStop(template, stopCounter - 1);
+            container.appendChild(template);
 
             stopCounter++;
-            renumberStops();
+            reindexStops();
+        }
+
+        function assignParamsToStop(stopEntry, index) {
+            stopEntry.querySelector('#input-stops').name = `routeStops[${index}].stopId`;
+            stopEntry.querySelector('#input-departureOffset').name = `routeStops[${index}].departureOffset`;
+            stopEntry.querySelector('#input-sequenceNumber').name = `routeStops[${index}].sequenceNumber`;
+            stopEntry.querySelector('#input-sequenceNumber').value = index + 1;
+        }
+
+        function reindexStops() {
+            document.querySelectorAll('.stop-entry').forEach((stopEntry, index) => {
+                stopEntry.querySelector('.stop-order').textContent = index + 1;
+                assignParamsToStop(stopEntry, index);
+            });
         }
 
         function removeStopInput(button) {
-            let stopDiv = button.parentNode;
-            stopDiv.parentNode.removeChild(stopDiv);
-            renumberStops();
+            button.closest('.stop-entry').remove();
+            reindexStops();
         }
 
-        function renumberStops() {
-            let stops = document.querySelectorAll('.stop-entry');
-            stopCounter = 1;
-            stops.forEach(stop => {
-                stop.querySelector('.stop-order').textContent = stopCounter;
-                stopCounter++;
-            });
-        }
     </script>
 </body>
 </html>
