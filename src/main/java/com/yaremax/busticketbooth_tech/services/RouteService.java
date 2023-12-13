@@ -56,18 +56,4 @@ public class RouteService {
         return routeStopRepository.findRouteStopsByRouteId(routeId);
     }
 
-    // TODO: додати update
-//    @Transactional
-//    public void updateRoute(Integer routeId, RouteDto routeDto) {
-//        Route existingRoute = routeRepository.findById(routeId)
-//                .orElseThrow(() -> new ResourceNotFoundException("Route with id " + routeId + " wasn't found"));
-//
-//        existingRoute.setName(routeDto.getName());
-//        // Видалення існуючих зупинок може бути необхідно
-//
-//        existingRoute.setRouteStops(routeDtoMapper.toEntity(routeDto).getRouteStops());
-//
-//        routeRepository.save(existingRoute);
-//    }
-
 }

@@ -16,7 +16,6 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class RouteStopDtoMapper {
-    // TODO: замінити на імпорт сервісу використовуючи анотацію для уникнення кругової залежності
     private final RouteRepository routeRepository;
     private final BusStopRepository busStopRepository;
 

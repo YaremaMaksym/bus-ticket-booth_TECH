@@ -113,6 +113,4 @@ public class ScheduleService {
 
         return availableSeats;
     }
-
-    // TODO: додати update
 }
