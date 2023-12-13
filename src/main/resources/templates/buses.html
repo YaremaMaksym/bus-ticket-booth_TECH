@@ -28,8 +28,9 @@
             <button type="submit">Schedules page</button>
         </form>
     </div>
+    <br>
 
-    <div th:if="${error}" class="error-message" th:text="${error}"></div>
+    <div th:if="${error}" class="error-message" th:text="${error}"><br></div>
 
     <form th:action="@{/buses}" method="post">
         <label for="serialNumber">Bus Serial Number:</label>
