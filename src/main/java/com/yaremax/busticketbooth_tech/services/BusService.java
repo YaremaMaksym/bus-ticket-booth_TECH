@@ -1,6 +1,7 @@
 package com.yaremax.busticketbooth_tech.services;
 
 import com.yaremax.busticketbooth_tech.data.Bus;
+import com.yaremax.busticketbooth_tech.projections.BusInfo;
 import com.yaremax.busticketbooth_tech.exception.DuplicateResourceException;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.exception.ValidationException;
@@ -10,6 +11,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -55,6 +57,10 @@ public class BusService {
         bus.setSerialNumber(newSerialNumber);
         bus.setSeatCapacity(newSeatCapacity);
         busRepository.save(bus);
+    }
+
+    public List<BusInfo> findAvailableBusInfosByTime(LocalDateTime inputDateTime) {
+        return busRepository.findAvailableBusInfosByTime(inputDateTime);
     }
 }
 
