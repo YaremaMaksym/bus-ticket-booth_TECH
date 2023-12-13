@@ -33,7 +33,6 @@
     </form>
 
     <form id="addScheduleForm" th:action="@{/schedules}" th:method="post">
-
         <select name="route" required>
             <option value="">Select a route</option>
             <option th:each="route : ${routes}" th:value="${route.id}" th:text="${route.name}"></option>
@@ -42,69 +41,69 @@
             <option value="">Select a bus</option>
             <option th:each="bus : ${busses}" th:value="${bus.id}" th:text="${bus.serialNumber}"></option>
         </select>
-        <input type="datetime-local" id="departureDateTime" name="departureDateTime" required placeholder="YYYY-MM-DDTHH:MM" />
+        <input type="datetime-local" name="departureDateTime" required placeholder="YYYY-MM-DDTHH:MM" />
 
         <button type="submit">Add schedule</button>
     </form>
     <table>
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Route name</th>
-                <th>Bus serial number</th>
-                <th>Available seats</th>
-                <th>Total seats</th>
-                <th>Departure date and time</th>
-                <th>Final destination</th>
+        <tr>
+            <th>Id</th>
+            <th>Route name</th>
+            <th>Bus serial number</th>
+            <th>Available seats</th>
+            <th>Total seats</th>
+            <th>Departure date and time</th>
+            <th>Final destination</th>
 
-                <th>Add Ticket</th>
-                <th>Refund ticket</th>
-                <th>Show boarding manifest</th>
+            <th>Add Ticket</th>
+            <th>Refund ticket</th>
+            <th>Show boarding manifest</th>
 
-                <th>Delete</th>
-            </tr>
+            <th>Delete</th>
+        </tr>
         </thead>
         <tbody>
-            <tr th:if="${schedulesInfo.isEmpty()}">
-                <td colspan="11">No schedules available</td>
-            </tr>
-            <tr th:each="s : ${schedulesInfo}" th:unless="${schedulesInfo.isEmpty()}">
-                <td th:text="${s.id}"></td>
-                <td th:text="${s.route.name}"></td>
-                <td th:text="${s.bus.serialNumber}"></td>
-                <td th:text="${s.availableSeats}"></td>
-                <td th:text="${s.totalSeats}"></td>
-                <td th:text="${#temporals.format(s.departureDateTime, 'yyyy-MM-dd HH:mm')}"></td>
-                <td th:text="${s.finalDestinationName}"></td>
+        <tr th:if="${schedulesInfo.isEmpty()}">
+            <td colspan="11">No schedules available</td>
+        </tr>
+        <tr th:each="s : ${schedulesInfo}" th:unless="${schedulesInfo.isEmpty()}">
+            <td th:text="${s.id}"></td>
+            <td th:text="${s.route.name}"></td>
+            <td th:text="${s.bus.serialNumber}"></td>
+            <td th:text="${s.availableSeats}"></td>
+            <td th:text="${s.totalSeats}"></td>
+            <td th:text="${#temporals.format(s.departureDateTime, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${s.finalDestinationName}"></td>
 
-                <td>
-                    <button type="button" th:attr="onclick=|openAddTicketDialog('${s.id}', '${s.route.id}')|">Purchase ticket</button>
-                </td>
-                <td>
-                    <form th:action="@{/refunds/schedule/{scheduleId}/tickets(scheduleId=${s.id})}" method="get">
-                        <button type="submit">Refund ticket</button>
-                    </form>
-                </td>
-                <td>
-                    <form th:action="@{/schedules/{id}/boarding-manifest(id=${s.id})}" method="get">
-                        <button type="submit">Show boarding manifest</button>
-                    </form>
-                </td>
+            <td>
+                <button type="button" th:attr="onclick=|openAddTicketDialog('${s.id}', '${s.route.id}')|">Purchase ticket</button>
+            </td>
+            <td>
+                <form th:action="@{/refunds/schedule/{scheduleId}/tickets(scheduleId=${s.id})}" method="get">
+                    <button type="submit">Refund ticket</button>
+                </form>
+            </td>
+            <td>
+                <form th:action="@{/schedules/{id}/boarding-manifest(id=${s.id})}" method="get">
+                    <button type="submit">Show boarding manifest</button>
+                </form>
+            </td>
 
-                <td>
-                    <form th:action="@{/schedules/{id}(id=${s.id})}" th:method="delete">
-                        <button type="submit">Delete</button>
-                        <input type="hidden" name="_method" value="delete"/>
-                    </form>
-                </td>
-            </tr>
+            <td>
+                <form th:action="@{/schedules/{id}(id=${s.id})}" th:method="delete">
+                    <button type="submit">Delete</button>
+                    <input type="hidden" name="_method" value="delete"/>
+                </form>
+            </td>
+        </tr>
         </tbody>
     </table>
 
     <dialog id="addTicketDialog">
         <form th:action="@{/tickets}" method="post">
 
-<!--            TODO: додати дефолтне значення на випадок якщо даних взагалі нема-->
+            <!--            TODO: додати дефолтне значення на випадок якщо даних взагалі нема-->
             <label for="selectStop">Select a stop:</label>
             <select name="busStopId" id="selectStop" required></select>
 
@@ -124,7 +123,6 @@
 
     <script>
         function calculatePrice(routeStops, stopIndex) {
-            console.log(routeStops, stopIndex);
             let totalTime = 0;
             for (let i = 0; i <= stopIndex; i++) {
                 totalTime += routeStops[i].departureOffset;
@@ -133,50 +131,49 @@
             document.getElementById('price-display').innerText = `${price}`;
         }
 
-
-        // TODO: передати параметром масив зупинок
         function openAddTicketDialog(scheduleId, routeId) {
             document.getElementById('scheduleId').value = scheduleId;
-
-            fetch(`/routes/${routeId}/stops`).then(function(response) {
-                return response.json();
-            }).then(function(busStops) {
-                var stopsSelect = document.getElementById('selectStop');
-                stopsSelect.innerHTML = busStops.map(function(stop) {
-                    return `<option value="${stop.id}">${stop.name}</option>`;
-                }).join('');
-            });
-
-            fetch(`/schedules/${scheduleId}/available-seats`).then(function(response) {
-                return response.json();
-            }).then(function(seats) {
-                var seatsSelect = document.getElementById('selectSeat');
-                seatsSelect.innerHTML = seats.map(function(seat) {
-                    return `<option value="${seat}">${seat}</option>`;
-                }).join('');
-            });
-
-
             let routeStops = [];
+
+            fetch(`/routes/${routeId}/stops`)
+                .then(response => {
+                    return response.json();
+                })
+                .then(busStops => {
+                    document.getElementById('selectStop').innerHTML = busStops.map(function(stop) {
+                        return `<option value="${stop.id}">${stop.name}</option>`;
+                    }).join('');
+                })
+                .catch(error => {
+                    console.error('There has been a problem with fetch operation:', error);
+                });
+
+            fetch(`/schedules/${scheduleId}/available-seats`)
+                .then(response => {
+                    return response.json();
+                })
+                .then(seats => {
+                    document.getElementById('selectSeat').innerHTML = seats.map(function(seat) {
+                        return `<option value="${seat}">${seat}</option>`;
+                    }).join('');
+                })
+                .catch(error => {
+                    console.error('There has been a problem with fetch operation:', error);
+                });
 
             fetch(`/routes/${routeId}/route-stops`)
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
                     return response.json();
                 })
                 .then(data => {
                     routeStops = data;
 
-                    // calculating price for default stop (first) in select block
                     let selectedStopIndex = document.getElementById('selectStop').selectedIndex;
                     calculatePrice(routeStops, selectedStopIndex);
                 })
                 .catch(error => {
-                    console.error('There has been a problem with your fetch operation:', error);
+                    console.error('There has been a problem with fetch operation:', error);
                 });
-
 
             document.getElementById('selectStop').addEventListener('change', function() {
                 let selectedStopIndex = this.selectedIndex;
