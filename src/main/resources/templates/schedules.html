@@ -47,7 +47,7 @@
             <option th:each="bus : ${busses}" th:value="${bus.id}" th:text="${bus.serialNumber}"></option>
         </select>
 
-        <label for="input-departureDateTime">Select bus:</label>
+        <label for="input-departureDateTime">Select a departure time:</label>
         <input id="input-departureDateTime" type="datetime-local" name="departureDateTime" required placeholder="YYYY-MM-DDTHH:MM" />
 
         <button type="submit">Add schedule</button>
