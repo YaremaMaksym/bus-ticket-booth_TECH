@@ -22,29 +22,38 @@
             <button type="submit">Schedules page</button>
         </form>
     </div>
+    <br>
 
     <form action="/schedules/search" method="get">
-        <label for="busStopSelect">Select stop:</label>
+        <label for="busStopSelect">Select a stop:</label>
         <select name="busStopId" id="busStopSelect" required>
-            <option value="">Select stop</option>
+            <option value="">Select a stop</option>
             <option th:each="stop : ${stops}" th:value="${stop.id}" th:text="${stop.name}"></option>
         </select>
-        <button type="submit">Пошук</button>
+        <button type="submit">Search cheapest</button>
     </form>
+    <br>
 
     <form id="addScheduleForm" th:action="@{/schedules}" th:method="post">
-        <select name="route" required>
+        <label for="input-select-route">Select a route:</label>
+        <select id="input-select-route" name="route" required>
             <option value="">Select a route</option>
             <option th:each="route : ${routes}" th:value="${route.id}" th:text="${route.name}"></option>
         </select>
-        <select name="bus" required>
+
+        <label for="input-select-bus">Select a bus:</label>
+        <select id="input-select-bus" name="bus" required>
             <option value="">Select a bus</option>
             <option th:each="bus : ${busses}" th:value="${bus.id}" th:text="${bus.serialNumber}"></option>
         </select>
-        <input type="datetime-local" name="departureDateTime" required placeholder="YYYY-MM-DDTHH:MM" />
+
+        <label for="input-departureDateTime">Select bus:</label>
+        <input id="input-departureDateTime" type="datetime-local" name="departureDateTime" required placeholder="YYYY-MM-DDTHH:MM" />
 
         <button type="submit">Add schedule</button>
     </form>
+    <br>
+
     <table>
         <thead>
         <tr>
