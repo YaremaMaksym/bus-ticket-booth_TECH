@@ -24,9 +24,9 @@
     </div>
 
     <form action="/schedules/search" method="get">
-        <label for="busStopSelect">Оберіть зупинку:</label>
+        <label for="busStopSelect">Select stop:</label>
         <select name="busStopId" id="busStopSelect" required>
-            <option value="">Виберіть зупинку</option>
+            <option value="">Select stop</option>
             <option th:each="stop : ${stops}" th:value="${stop.id}" th:text="${stop.name}"></option>
         </select>
         <button type="submit">Пошук</button>
