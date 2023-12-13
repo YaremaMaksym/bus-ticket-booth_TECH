@@ -4,6 +4,7 @@ import com.yaremax.busticketbooth_tech.data.*;
 import com.yaremax.busticketbooth_tech.dto.RouteStopDto;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.mappers.RouteStopDtoMapper;
+import com.yaremax.busticketbooth_tech.projections.ScheduleInfo;
 import com.yaremax.busticketbooth_tech.repositories.ScheduleRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;

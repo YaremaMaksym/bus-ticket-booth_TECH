@@ -1,7 +1,7 @@
 package com.yaremax.busticketbooth_tech.controllers;
 
-import com.yaremax.busticketbooth_tech.data.BusStopInfo;
-import com.yaremax.busticketbooth_tech.data.RouteStopInfo;
+import com.yaremax.busticketbooth_tech.projections.BusStopInfo;
+import com.yaremax.busticketbooth_tech.projections.RouteStopInfo;
 import com.yaremax.busticketbooth_tech.dto.RouteDto;
 import com.yaremax.busticketbooth_tech.services.BusStopService;
 import com.yaremax.busticketbooth_tech.services.RouteService;
