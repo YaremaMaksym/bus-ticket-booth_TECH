@@ -24,7 +24,7 @@ public class ScheduleController {
     @GetMapping
     public String showAllSchedules(Model model) {
         model.addAttribute("schedulesInfo", scheduleService.findAllScheduleInfo());
-        model.addAttribute("busses", busService.findAll());
+        model.addAttribute("busses", busService.findAllAvailable());
         model.addAttribute("stops", busStopService.findAll());
         model.addAttribute("routes", routeService.findAll());
         return "schedules";

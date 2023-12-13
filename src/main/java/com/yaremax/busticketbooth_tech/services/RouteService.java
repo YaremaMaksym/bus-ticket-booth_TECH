@@ -4,6 +4,8 @@ import com.yaremax.busticketbooth_tech.data.*;
 import com.yaremax.busticketbooth_tech.dto.RouteDto;
 import com.yaremax.busticketbooth_tech.mappers.RouteDtoMapper;
 import com.yaremax.busticketbooth_tech.mappers.RouteStopDtoMapper;
+import com.yaremax.busticketbooth_tech.projections.BusStopInfo;
+import com.yaremax.busticketbooth_tech.projections.RouteStopInfo;
 import com.yaremax.busticketbooth_tech.repositories.RouteRepository;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.repositories.RouteStopRepository;
@@ -54,7 +56,7 @@ public class RouteService {
         return routeStopRepository.findRouteStopsByRouteId(routeId);
     }
 
-    // TODO: додати update для route
+    // TODO: додати update
 //    @Transactional
 //    public void updateRoute(Integer routeId, RouteDto routeDto) {
 //        Route existingRoute = routeRepository.findById(routeId)

@@ -1,9 +1,9 @@
 package com.yaremax.busticketbooth_tech.repositories;
 
-import com.yaremax.busticketbooth_tech.data.BusStopInfo;
+import com.yaremax.busticketbooth_tech.projections.BusStopInfo;
 import com.yaremax.busticketbooth_tech.data.RouteStop;
 import com.yaremax.busticketbooth_tech.data.RouteStopId;
-import com.yaremax.busticketbooth_tech.data.RouteStopInfo;
+import com.yaremax.busticketbooth_tech.projections.RouteStopInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

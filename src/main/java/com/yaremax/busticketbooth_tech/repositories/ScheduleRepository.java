@@ -1,7 +1,7 @@
 package com.yaremax.busticketbooth_tech.repositories;
 
 import com.yaremax.busticketbooth_tech.data.Schedule;
-import com.yaremax.busticketbooth_tech.data.ScheduleInfo;
+import com.yaremax.busticketbooth_tech.projections.ScheduleInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

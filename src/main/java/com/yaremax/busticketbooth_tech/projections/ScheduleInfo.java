@@ -1,4 +1,8 @@
-package com.yaremax.busticketbooth_tech.data;
+package com.yaremax.busticketbooth_tech.projections;
+import com.yaremax.busticketbooth_tech.data.Bus;
+import com.yaremax.busticketbooth_tech.data.Route;
+import com.yaremax.busticketbooth_tech.data.Schedule;
+
 import java.time.LocalDateTime;
 
 /**
