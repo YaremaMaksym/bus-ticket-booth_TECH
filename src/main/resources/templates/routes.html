@@ -33,6 +33,7 @@
             <button type="submit">Schedules page</button>
         </form>
     </div>
+    <br>
 
     <button type="button" onclick="openAddRouteDialog()">Add New Route</button>
 
@@ -62,8 +63,10 @@
         <form id="routeForm" th:action="@{/routes}" th:method="post">
             <label for="routeName">Route Name:</label>
             <input type="text" id="routeName" name="name" required placeholder="Enter route name" />
+            <br>
 
             <div id="stopsContainer"></div>
+            <br>
 
             <button type="button" onclick="addNewStop()">Add New Stop</button>
             <button type="submit">Save Route</button>
