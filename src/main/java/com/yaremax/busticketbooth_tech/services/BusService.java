@@ -21,7 +21,7 @@ import java.util.List;
 public class BusService {
     private final BusRepository busRepository;
     private final RouteService routeService;
-    private final TicketRepository ticketRepository;
+    private final TicketService ticketService;
 
     public List<Bus> findAll() {
         return busRepository.findAll();
@@ -53,7 +53,7 @@ public class BusService {
         if (!bus.getSerialNumber().equals(newSerialNumber) && busRepository.existsBySerialNumber(newSerialNumber)) {
             throw new DuplicateResourceException("Serial number already exists.");
         }
-        if (newSeatCapacity < ticketRepository.countTicketsForScheduleByBusSerialNumber(busId)) {
+        if (newSeatCapacity < ticketService.countTicketsForScheduleByBusSerialNumber(busId)) {
             throw new ValidationException("Invalid seat capacity: less than the number of sold tickets.");
         }
 
