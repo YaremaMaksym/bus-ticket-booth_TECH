@@ -78,10 +78,10 @@
             </tr>
         </thead>
         <tbody>
-        <tr th:if="${schedulesInfo.isEmpty()}">
-            <td colspan="11">No schedules available</td>
+        <tr th:if="${schedules.isEmpty()}">
+            <td>No schedules available</td>
         </tr>
-        <tr th:each="s : ${schedulesInfo}" th:unless="${schedulesInfo.isEmpty()}">
+        <tr th:each="s : ${schedules}" th:unless="${schedules.isEmpty()}">
             <td th:text="${s.id}"></td>
             <td th:text="${s.route.name}"></td>
             <td th:text="${s.bus.serialNumber}"></td>
