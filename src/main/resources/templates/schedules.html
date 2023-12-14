@@ -35,7 +35,7 @@
     <br>
 
     <div id="bus-selection-instructions">
-        Please select a departure time to view available buses.
+        Please select a route and departure time to view available buses.
     </div>
     <form id="addScheduleForm" th:action="@{/schedules}" th:method="post">
         <label for="input-select-route">Select a route:</label>
@@ -193,27 +193,37 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('input-select-bus').disabled = true;
+            let inputBusSelect = document.getElementById('input-select-bus');
+            let inputDateTime = document.getElementById('input-departureDateTime');
+            let inputRouteSelect = document.getElementById('input-select-route');
 
-            document.getElementById('input-departureDateTime').addEventListener('change', function() {
-                let inputDateTime = this.value;
+            inputBusSelect.disabled = true;
 
-                fetch(`/buses/find-available?inputDateTime=${encodeURIComponent(inputDateTime)}`)
-                    .then(response => {
-                        return response.json();
-                    })
-                    .then(buses => {
-                        console.log(buses);
-                        document.getElementById('input-select-bus').innerHTML = buses.map(function(bus) {
-                            return `<option value="${bus.id}">${bus.serialNumber}</option>`;
-                        }).join('');
-                        document.getElementById('input-select-bus').disabled = false;
-                        document.getElementById('bus-selection-instructions').textContent = "Please select a bus from the available options for the chosen time.";
-                    })
-                    .catch(error => {
-                        console.error('There has been a problem with fetch operation:', error);
-                    });
-            });
+            function updateBusSelection() {
+                let dateTimeValue = inputDateTime.value;
+                let routeIdValue = inputRouteSelect.value;
+
+                if (dateTimeValue && routeIdValue) {
+                    fetch(`/buses/find-available?inputDateTime=${encodeURIComponent(dateTimeValue)}&routeId=${encodeURIComponent(routeIdValue)}`)
+                        .then(response => response.json())
+                        .then(buses => {
+                            console.log(buses);
+                            inputBusSelect.innerHTML = buses.map(function(bus) {
+                                return `<option value="${bus.id}">${bus.serialNumber}</option>`;
+                            }).join('');
+                            inputBusSelect.disabled = false;
+                            document.getElementById('bus-selection-instructions').textContent = "Please select a bus from the available options for the chosen time.";
+                        })
+                        .catch(error => {
+                            console.error('There has been a problem with fetch operation:', error);
+                        });
+                } else {
+                    inputBusSelect.disabled = true;
+                }
+            }
+
+            inputDateTime.addEventListener('change', updateBusSelection);
+            inputRouteSelect.addEventListener('change', updateBusSelection);
         });
     </script>
 </body>
