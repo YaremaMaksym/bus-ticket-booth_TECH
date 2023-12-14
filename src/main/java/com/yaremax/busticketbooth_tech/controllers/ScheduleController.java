@@ -18,7 +18,6 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
     private final TicketService ticketService;
     private final BusStopService busStopService;
-    private final BusService busService;
     private final RouteService routeService;
 
     @GetMapping
