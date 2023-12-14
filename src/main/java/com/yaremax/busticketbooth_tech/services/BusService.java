@@ -1,6 +1,7 @@
 package com.yaremax.busticketbooth_tech.services;
 
 import com.yaremax.busticketbooth_tech.data.Bus;
+import com.yaremax.busticketbooth_tech.data.RouteStop;
 import com.yaremax.busticketbooth_tech.projections.BusInfo;
 import com.yaremax.busticketbooth_tech.exception.DuplicateResourceException;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
@@ -12,12 +13,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class BusService {
     private final BusRepository busRepository;
+    private final RouteService routeService;
     private final TicketRepository ticketRepository;
 
     public List<Bus> findAll() {
@@ -59,8 +62,15 @@ public class BusService {
         busRepository.save(bus);
     }
 
-    public List<BusInfo> findAvailableBusInfosByTime(LocalDateTime inputDateTime) {
-        return busRepository.findAvailableBusInfosByTime(inputDateTime);
+    public List<BusInfo> findAvailableBusInfosByTimeAndRoute(LocalDateTime departureDateTime, Integer routeId) {
+        int totalTime = 0;
+        for (RouteStop rs : routeService.findById(routeId).getRouteStops()) {
+            totalTime += rs.getDepartureOffset();
+        }
+
+        return busRepository.findAvailableBusInfosByTime(departureDateTime, departureDateTime.plusMinutes(totalTime)).stream()
+                .sorted(Comparator.comparing(BusInfo::getId))
+                .toList();
     }
 }
 

@@ -47,7 +47,8 @@ public class BusController {
 
     @ResponseBody
     @GetMapping("/find-available")
-    public ResponseEntity<List<BusInfo>> getAvailableBusInfos(@RequestParam LocalDateTime inputDateTime) {
-        return ResponseEntity.ok(busService.findAvailableBusInfosByTime(inputDateTime));
+    public ResponseEntity<List<BusInfo>> getAvailableBusInfos(@RequestParam LocalDateTime inputDateTime,
+                                                              @RequestParam Integer routeId) {
+        return ResponseEntity.ok(busService.findAvailableBusInfosByTimeAndRoute(inputDateTime, routeId));
     }
 }

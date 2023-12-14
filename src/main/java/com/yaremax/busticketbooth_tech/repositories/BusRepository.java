@@ -22,13 +22,23 @@ public interface BusRepository extends JpaRepository<Bus, Integer> {
             "    FROM schedule s " +
             "    JOIN routes_stops rs ON s.route_id = rs.route_id " +
             "    WHERE s.bus_id = b.bus_id " +
-            "    AND :inputDateTime BETWEEN s.departure_datetime AND" +
-            "       (SELECT s.departure_datetime + INTERVAL '1 minute' * SUM(rs.departure_offset)" +
-            "       FROM routes_stops rs" +
-            "       WHERE rs.route_id = s.route_id" +
-            "       GROUP BY rs.route_id" +
-            "    ) " +
+            "    AND (" +
+            "        :departureDatetime BETWEEN s.departure_datetime AND " +
+            "        (s.departure_datetime + INTERVAL '1 minute' * (SELECT SUM(rs.departure_offset)" +
+            "                                                     FROM routes_stops rs" +
+            "                                                     WHERE rs.route_id = s.route_id)) " +
+            "        OR :endRouteDatetime BETWEEN s.departure_datetime AND " +
+            "        (s.departure_datetime + INTERVAL '1 minute' * (SELECT SUM(rs.departure_offset)" +
+            "                                                     FROM routes_stops rs" +
+            "                                                     WHERE rs.route_id = s.route_id)) " +
+            "        OR s.departure_datetime BETWEEN :departureDatetime AND :endRouteDatetime " +
+            "        OR (s.departure_datetime + INTERVAL '1 minute' * (SELECT SUM(rs.departure_offset)" +
+            "                                                        FROM routes_stops rs" +
+            "                                                        WHERE rs.route_id = s.route_id)) BETWEEN :departureDatetime AND :endRouteDatetime " +
+            "    )" +
             ")", nativeQuery = true)
-    List<BusInfo> findAvailableBusInfosByTime(@Param("inputDateTime") LocalDateTime inputDateTime);
+    List<BusInfo> findAvailableBusInfosByTime(@Param("departureDatetime") LocalDateTime departureDatetime,
+                                              @Param("endRouteDatetime") LocalDateTime endRouteDatetime);
+
 
 }
