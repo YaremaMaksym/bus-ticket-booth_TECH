@@ -23,7 +23,7 @@ public class ScheduleController {
 
     @GetMapping
     public String showAllSchedules(Model model) {
-        model.addAttribute("schedulesInfo", scheduleService.findAllScheduleInfo());
+        model.addAttribute("schedulesInfo", scheduleService.findAllPlannedScheduleInfo());
         model.addAttribute("stops", busStopService.findAll());
         model.addAttribute("routes", routeService.findAll());
         return "schedules";
@@ -39,6 +39,7 @@ public class ScheduleController {
         return "schedules";
     }
 
+    // TODO: зробити dto
     @PostMapping
     public String addSchedule(@ModelAttribute Schedule schedule) {
         scheduleService.addSchedule(schedule);

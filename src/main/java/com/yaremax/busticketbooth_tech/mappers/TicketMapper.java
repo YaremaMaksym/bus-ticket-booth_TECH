@@ -7,6 +7,8 @@ import com.yaremax.busticketbooth_tech.dto.TicketDto;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.repositories.BusStopRepository;
 import com.yaremax.busticketbooth_tech.repositories.ScheduleRepository;
+import com.yaremax.busticketbooth_tech.services.BusStopService;
+import com.yaremax.busticketbooth_tech.services.ScheduleService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.annotation.ApplicationScope;
@@ -15,19 +17,12 @@ import org.springframework.web.context.annotation.ApplicationScope;
 @ApplicationScope
 @AllArgsConstructor
 public class TicketMapper {
-    private final ScheduleRepository scheduleRepository;
-    private final BusStopRepository busStopRepository;
+    private final ScheduleService scheduleService;
+    private final BusStopService busStopService;
 
     public Ticket toEntity(TicketDto ticketDto) {
-        Schedule schedule = scheduleRepository.findById(ticketDto.getScheduleId())
-                .orElseThrow(() -> new ResourceNotFoundException("Schedule with id " + ticketDto.getScheduleId() + " wasn't found"));
-
-        BusStop busStop = busStopRepository.findById(ticketDto.getBusStopId())
-                .orElseThrow(() -> new ResourceNotFoundException("Bus stop with id " + ticketDto.getBusStopId() + " wasn't found"));
-
-
-        return new Ticket(schedule,
-                busStop,
+        return new Ticket(scheduleService.findById(ticketDto.getScheduleId()),
+                busStopService.findById(ticketDto.getBusStopId()),
                 ticketDto.getSeatNumber(),
                 ticketDto.getTicketStatus());
     }

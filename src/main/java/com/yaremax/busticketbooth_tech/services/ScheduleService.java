@@ -31,8 +31,7 @@ public class ScheduleService {
                 .orElseThrow(() -> new ResourceNotFoundException("Schedule with id " + scheduleId + " wasn't found"));
     }
 
-
-    public List<ScheduleInfo> findAllScheduleInfo() {
+    public List<ScheduleInfo> findAllPlannedScheduleInfo() {
         List<ScheduleInfo> allScheduleInfo = scheduleRepository.findAllScheduleInfo();
         LocalDateTime currentTime = LocalDateTime.now();
         return allScheduleInfo.stream()
@@ -41,9 +40,8 @@ public class ScheduleService {
                 .collect(Collectors.toList());
     }
 
-
     public Optional<List<ScheduleInfo>> findBestSchedulesToStop(Integer busStopId) {
-        List<ScheduleInfo> allScheduleInfo = findAllScheduleInfo();
+        List<ScheduleInfo> allScheduleInfo = findAllPlannedScheduleInfo();
 
         return Optional.of(allScheduleInfo.stream()
                 .filter(schedule -> schedule.getRoute().getRouteStops() != null ||

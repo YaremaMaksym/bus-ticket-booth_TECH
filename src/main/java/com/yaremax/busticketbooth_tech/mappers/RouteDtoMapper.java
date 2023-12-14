@@ -15,11 +15,6 @@ public class RouteDtoMapper {
         Route route = new Route();
         route.setName(routeDto.getName());
 
-// For updating existing route
-//        if (routeDto.getId() != null) {
-//            route.setId(routeDto.getId());
-//        }
-
         return route;
     }
 

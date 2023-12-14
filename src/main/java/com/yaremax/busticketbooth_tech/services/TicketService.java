@@ -38,4 +38,8 @@ public class TicketService {
         ticket.setTicketStatus("refunded");
         ticketRepository.saveAndFlush(ticket);
     }
+
+    public Integer countTicketsForScheduleByBusSerialNumber(Integer busId) {
+        return ticketRepository.countTicketsForScheduleByBusSerialNumber(busId);
+    }
 }
