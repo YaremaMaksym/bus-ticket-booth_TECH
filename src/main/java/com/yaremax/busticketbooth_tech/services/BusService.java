@@ -67,9 +67,7 @@ public class BusService {
             totalTime += rs.getDepartureOffset();
         }
 
-        return busRepository.findAvailableBusInfosByTime(departureDateTime, departureDateTime.plusMinutes(totalTime)).stream()
-                .sorted(Comparator.comparing(BusInfo::getId))
-                .toList();
+        return busRepository.findAvailableBusInfosByTime(departureDateTime, departureDateTime.plusMinutes(totalTime));
     }
 }
 

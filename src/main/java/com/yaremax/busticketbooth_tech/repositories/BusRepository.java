@@ -36,7 +36,7 @@ public interface BusRepository extends JpaRepository<Bus, Integer> {
             "                                                        FROM routes_stops rs" +
             "                                                        WHERE rs.route_id = s.route_id)) BETWEEN :departureDatetime AND :endRouteDatetime " +
             "    )" +
-            ")", nativeQuery = true)
+            ") ORDER BY b.bus_id", nativeQuery = true)
     List<BusInfo> findAvailableBusInfosByTime(@Param("departureDatetime") LocalDateTime departureDatetime,
                                               @Param("endRouteDatetime") LocalDateTime endRouteDatetime);
 
