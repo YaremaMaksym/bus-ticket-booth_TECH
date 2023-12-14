@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Manage Buses</title>
+    <title>Buses</title>
     <style>
         .error-message {
             color: red;
@@ -26,6 +26,10 @@
 
         <form th:action="@{/schedules}" method="get">
             <button type="submit">Schedules page</button>
+        </form>
+
+        <form th:action="@{/tickets}" method="get">
+            <button type="submit">Tickets page</button>
         </form>
     </div>
     <br>

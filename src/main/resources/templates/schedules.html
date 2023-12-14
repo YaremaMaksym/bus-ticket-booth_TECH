@@ -21,6 +21,10 @@
         <form th:action="@{/schedules}" method="get">
             <button type="submit">Schedules page</button>
         </form>
+
+        <form th:action="@{/tickets}" method="get">
+            <button type="submit">Tickets page</button>
+        </form>
     </div>
     <br>
 
@@ -57,21 +61,21 @@
 
     <table>
         <thead>
-        <tr>
-            <th>Id</th>
-            <th>Route name</th>
-            <th>Bus serial number</th>
-            <th>Available seats</th>
-            <th>Total seats</th>
-            <th>Departure date and time</th>
-            <th>Final destination</th>
+            <tr>
+                <th>Id</th>
+                <th>Route name</th>
+                <th>Bus serial number</th>
+                <th>Available seats</th>
+                <th>Total seats</th>
+                <th>Departure date and time</th>
+                <th>Final destination</th>
 
-            <th>Add Ticket</th>
-            <th>Refund ticket</th>
-            <th>Show boarding manifest</th>
+                <th>Add Ticket</th>
+                <th>Refund ticket</th>
+                <th>Show boarding manifest</th>
 
-            <th>Delete</th>
-        </tr>
+                <th>Delete</th>
+            </tr>
         </thead>
         <tbody>
         <tr th:if="${schedulesInfo.isEmpty()}">
@@ -90,7 +94,7 @@
                 <button type="button" th:attr="onclick=|openAddTicketDialog('${s.id}', '${s.route.id}')|">Purchase ticket</button>
             </td>
             <td>
-                <form th:action="@{/refunds/schedule/{scheduleId}/tickets(scheduleId=${s.id})}" method="get">
+                <form th:action="@{/tickets/schedule/{scheduleId}(scheduleId=${s.id})}" method="get">
                     <button type="submit">Refund ticket</button>
                 </form>
             </td>

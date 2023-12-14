@@ -14,10 +14,16 @@ import org.springframework.web.bind.annotation.*;
 public class TicketController {
     private final TicketService ticketService;
 
+    @GetMapping
+    public String showTicketsPage(Model model) {
+        model.addAttribute("tickets", ticketService.findAllTicketInfos());
+        return "tickets";
+    }
+
     @GetMapping("/{ticketId}")
-    public String showTicket(Model model,
+    public String showTicketPage(Model model,
                              @PathVariable Integer ticketId) {
-        model.addAttribute("ticket", ticketService.findById(ticketId));
+        model.addAttribute("ticket", ticketService.findByIdTicketInfo(ticketId));
         return "ticket_info";
     }
 
@@ -25,5 +31,18 @@ public class TicketController {
     public String addTicket(@ModelAttribute TicketDto ticketDto) {
         Ticket ticket = ticketService.addTicket(ticketDto);
         return "redirect:tickets/" + ticket.getId();
+    }
+
+    @GetMapping("/schedule/{scheduleId}")
+    public String showTicketRefundPage(Model model,
+                                       @PathVariable Integer scheduleId) {
+        model.addAttribute("tickets", ticketService.findAllByScheduleAndTicketStatus(scheduleId, "booked"));
+        return "ticket_refund";
+    }
+
+    @PostMapping("/{ticketId}/refund")
+    public String refundTicket(@PathVariable Integer ticketId) {
+        ticketService.refundTicket(ticketId);
+        return "redirect:/tickets";
     }
 }

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ticket refund</title>
+    <title>Tickets</title>
 </head>
 <body>
     <div id="navigation-bar" style="display: flex;">
@@ -28,23 +28,35 @@
     </div>
     <br>
 
-    <h3>Tickets in schedule</h3>
     <table>
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Status</th>
                 <th>Seat number</th>
-                <th>Bus stop</th>
+                <th>Schedule id</th>
+                <th>Route name</th>
 
+                <th>Show</th>
                 <th>Refund</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="t : ${tickets}">
+            <tr th:if="${tickets.isEmpty()}">
+                <td>No tickets available</td>
+            </tr>
+            <tr th:each="t : ${tickets}" th:unless="${tickets.isEmpty()}">
                 <td th:text="${t.id}"></td>
+                <td th:text="${t.ticketStatus}"></td>
                 <td th:text="${t.seatNumber}"></td>
-                <td th:text="${t.busStop.name}"></td>
+                <td th:text="${t.schedule.id}"></td>
+                <td th:text="${t.schedule.route.name}"></td>
 
+                <td>
+                    <form th:action="@{/tickets/{ticketId}(ticketId=${t.id})}" method="get">
+                        <button type="submit">Show</button>
+                    </form>
+                </td>
                 <td>
                     <form th:action="@{/tickets/{ticketId}/refund(ticketId=${t.id})}" method="post">
                         <button type="submit">Refund</button>
