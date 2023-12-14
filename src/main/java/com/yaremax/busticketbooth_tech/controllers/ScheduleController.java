@@ -23,7 +23,7 @@ public class ScheduleController {
 
     @GetMapping
     public String showAllSchedules(Model model) {
-        model.addAttribute("schedulesInfo", scheduleService.findAllPlannedScheduleInfo());
+        model.addAttribute("schedules", scheduleService.findAllPlannedScheduleInfo());
         model.addAttribute("stops", busStopService.findAll());
         model.addAttribute("routes", routeService.findAll());
         return "schedules";
@@ -32,8 +32,7 @@ public class ScheduleController {
     @GetMapping("/search")
     public String showBestSchedulesToStop(Model model,
                                          @RequestParam Integer busStopId) {
-        model.addAttribute("schedulesInfo", scheduleService.findBestSchedulesToStop(busStopId).orElse(Collections.emptyList()));
-        model.addAttribute("busses", busService.findAll());
+        model.addAttribute("schedules", scheduleService.findBestSchedulesToStop(busStopId).orElse(Collections.emptyList()));
         model.addAttribute("stops", busStopService.findAll());
         model.addAttribute("routes", routeService.findAll());
         return "schedules";
@@ -52,12 +51,6 @@ public class ScheduleController {
         return "redirect:/schedules";
     }
 
-    @ResponseBody
-    @GetMapping("/{id}/available-seats")
-    public ResponseEntity<List<Integer>> getAvailableSeats(@PathVariable Integer id) {
-        return ResponseEntity.ok(scheduleService.getAvailableSeats(id));
-    }
-
     @GetMapping("/{scheduleId}/boarding-manifest")
     public String getBoardingManifestForSchedule(@PathVariable Integer scheduleId, Model model) {
         model.addAttribute("tickets", ticketService.findAllByScheduleAndTicketStatus(scheduleId, "booked"));
@@ -66,4 +59,11 @@ public class ScheduleController {
 
         return "boarding_manifest";
     }
+
+    @ResponseBody
+    @GetMapping("/{id}/available-seats")
+    public ResponseEntity<List<Integer>> getAvailableSeats(@PathVariable Integer id) {
+        return ResponseEntity.ok(scheduleService.getAvailableSeats(id));
+    }
+
 }
