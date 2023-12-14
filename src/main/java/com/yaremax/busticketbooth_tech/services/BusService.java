@@ -7,7 +7,6 @@ import com.yaremax.busticketbooth_tech.exception.DuplicateResourceException;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.exception.ValidationException;
 import com.yaremax.busticketbooth_tech.repositories.BusRepository;
-import com.yaremax.busticketbooth_tech.repositories.TicketRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

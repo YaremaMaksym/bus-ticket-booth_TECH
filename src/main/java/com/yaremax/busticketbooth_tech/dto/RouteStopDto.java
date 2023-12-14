@@ -4,9 +4,7 @@ import com.yaremax.busticketbooth_tech.data.BusStop;
 import com.yaremax.busticketbooth_tech.data.Route;
 import com.yaremax.busticketbooth_tech.data.RouteStop;
 import lombok.Data;
-import lombok.Value;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
