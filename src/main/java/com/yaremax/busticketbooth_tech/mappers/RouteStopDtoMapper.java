@@ -1,9 +1,7 @@
 package com.yaremax.busticketbooth_tech.mappers;
 
-import com.yaremax.busticketbooth_tech.data.Route;
 import com.yaremax.busticketbooth_tech.data.RouteStop;
 import com.yaremax.busticketbooth_tech.data.RouteStopId;
-import com.yaremax.busticketbooth_tech.dto.RouteDto;
 import com.yaremax.busticketbooth_tech.dto.RouteStopDto;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.repositories.BusStopRepository;
