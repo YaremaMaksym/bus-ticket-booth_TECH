@@ -53,9 +53,9 @@ public class TransportServiceMediator {
     }
 
     public List<BusInfo> findAvailableBusInfosByTimeAndRoute(LocalDateTime departureDateTime, Integer routeId) {
-        Route route = routeService.findById(routeId);
+        Set<RouteStop> routeStops = routeService.findById(routeId).getRouteStops();
 
-        return busService.findAvailableBusInfosByTimeAndRoute(departureDateTime, route);
+        return busService.findAvailableBusInfosByTimeAndRoute(departureDateTime, routeStops);
     }
 
     public List<Integer> getAvailableSeats(Integer scheduleId) {
