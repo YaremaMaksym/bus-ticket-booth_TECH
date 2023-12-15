@@ -1,7 +1,5 @@
 package com.yaremax.busticketbooth_tech.services;
 
-import com.yaremax.busticketbooth_tech.data.BusStop;
-import com.yaremax.busticketbooth_tech.data.Schedule;
 import com.yaremax.busticketbooth_tech.data.Ticket;
 import com.yaremax.busticketbooth_tech.dto.TicketDto;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;

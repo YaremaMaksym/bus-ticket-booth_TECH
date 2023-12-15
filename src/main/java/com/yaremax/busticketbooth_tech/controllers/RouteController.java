@@ -6,7 +6,6 @@ import com.yaremax.busticketbooth_tech.dto.RouteDto;
 import com.yaremax.busticketbooth_tech.services.BusStopService;
 import com.yaremax.busticketbooth_tech.services.RouteService;
 import com.yaremax.busticketbooth_tech.services.RouteStopService;
-import com.yaremax.busticketbooth_tech.services.TransportServiceMediator;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ import java.util.List;
 @RequestMapping("/routes")
 @AllArgsConstructor
 public class RouteController {
-    private final TransportServiceMediator transportServiceMediator;
     private final RouteStopService routeStopService;
     private final BusStopService busStopService;
     private final RouteService routeService;
