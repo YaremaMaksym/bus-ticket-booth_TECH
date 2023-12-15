@@ -42,15 +42,6 @@ public class RouteStopDtoMapper {
         return dtos;
     }
 
-    public Set<RouteStop> toEntitySet(List<RouteStopDto> routeStopDtos, Route route, Map<Integer, BusStop> busStopsById) {
-        Set<RouteStop> set = new LinkedHashSet<>();
-        for (RouteStopDto routeStopDto : routeStopDtos) {
-            BusStop busStop = busStopsById.get(routeStopDto.getStopId());
-            set.add(toEntity(routeStopDto, route, busStop));
-        }
-        return set;
-    }
-
     public List<RouteStopDto> toSortedDtoList(List<RouteStop> routeStops) {
         return toDtoList(routeStops).stream()
                 .sorted(Comparator.comparing(RouteStopDto::getSequenceNumber))

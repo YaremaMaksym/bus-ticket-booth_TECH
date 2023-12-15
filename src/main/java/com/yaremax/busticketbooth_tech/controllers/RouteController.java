@@ -34,7 +34,7 @@ public class RouteController {
 
     @PostMapping
     public String addRoute(@ModelAttribute RouteDto routeDto) {
-        transportServiceMediator.addRoute(routeDto);
+        routeService.addRoute(routeDto);
         return "redirect:/routes";
     }
 
