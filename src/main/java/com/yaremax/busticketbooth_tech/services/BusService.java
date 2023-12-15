@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -59,9 +60,9 @@ public class BusService {
         busRepository.save(bus);
     }
 
-    public List<BusInfo> findAvailableBusInfosByTimeAndRoute(LocalDateTime departureDateTime, Route route) {
+    public List<BusInfo> findAvailableBusInfosByTimeAndRoute(LocalDateTime departureDateTime, Set<RouteStop> routeStops) {
         int totalTime = 0;
-        for (RouteStop rs : route.getRouteStops()) {
+        for (RouteStop rs : routeStops) {
             totalTime += rs.getDepartureOffset();
         }
 
