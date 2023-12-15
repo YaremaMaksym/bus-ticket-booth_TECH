@@ -1,6 +1,7 @@
 package com.yaremax.busticketbooth_tech.services;
 
 import com.yaremax.busticketbooth_tech.data.Bus;
+import com.yaremax.busticketbooth_tech.data.Route;
 import com.yaremax.busticketbooth_tech.data.RouteStop;
 import com.yaremax.busticketbooth_tech.projections.BusInfo;
 import com.yaremax.busticketbooth_tech.exception.DuplicateResourceException;
@@ -12,15 +13,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class BusService {
     private final BusRepository busRepository;
-    private final RouteService routeService;
-    private final TicketService ticketService;
 
     public List<Bus> findAll() {
         return busRepository.findAll();
@@ -46,13 +44,13 @@ public class BusService {
     }
 
     @Transactional
-    public void patchBus(Integer busId, String newSerialNumber, Integer newSeatCapacity) {
+    public void patchBus(Integer busId, String newSerialNumber, Integer newSeatCapacity, Integer ticketsSold) {
         Bus bus = findById(busId);
 
         if (!bus.getSerialNumber().equals(newSerialNumber) && busRepository.existsBySerialNumber(newSerialNumber)) {
             throw new DuplicateResourceException("Serial number already exists.");
         }
-        if (newSeatCapacity < ticketService.countTicketsForScheduleByBusSerialNumber(busId)) {
+        if (newSeatCapacity < ticketsSold) {
             throw new ValidationException("Invalid seat capacity: less than the number of sold tickets.");
         }
 
@@ -61,9 +59,9 @@ public class BusService {
         busRepository.save(bus);
     }
 
-    public List<BusInfo> findAvailableBusInfosByTimeAndRoute(LocalDateTime departureDateTime, Integer routeId) {
+    public List<BusInfo> findAvailableBusInfosByTimeAndRoute(LocalDateTime departureDateTime, Route route) {
         int totalTime = 0;
-        for (RouteStop rs : routeService.findById(routeId).getRouteStops()) {
+        for (RouteStop rs : route.getRouteStops()) {
             totalTime += rs.getDepartureOffset();
         }
 

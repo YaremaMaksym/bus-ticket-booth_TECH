@@ -3,6 +3,8 @@ package com.yaremax.busticketbooth_tech.controllers;
 import com.yaremax.busticketbooth_tech.data.Bus;
 import com.yaremax.busticketbooth_tech.projections.BusInfo;
 import com.yaremax.busticketbooth_tech.services.BusService;
+import com.yaremax.busticketbooth_tech.services.TransportServiceMediator;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 public class BusController {
     private final BusService busService;
+    private final TransportServiceMediator transportServiceMediator;
 
     @GetMapping
     public String getBuses(Model model) {
@@ -41,7 +44,7 @@ public class BusController {
     public String patchBus(@PathVariable Integer id,
                            @RequestParam String newSerialNumber,
                            @RequestParam Integer newSeatCapacity) {
-        busService.patchBus(id, newSerialNumber, newSeatCapacity);
+        transportServiceMediator.patchBus(id, newSerialNumber, newSeatCapacity);
         return "redirect:/buses";
     }
 
@@ -49,6 +52,6 @@ public class BusController {
     @GetMapping("/find-available")
     public ResponseEntity<List<BusInfo>> getAvailableBusInfos(@RequestParam LocalDateTime inputDateTime,
                                                               @RequestParam Integer routeId) {
-        return ResponseEntity.ok(busService.findAvailableBusInfosByTimeAndRoute(inputDateTime, routeId));
+        return ResponseEntity.ok(transportServiceMediator.findAvailableBusInfosByTimeAndRoute(inputDateTime, routeId));
     }
 }

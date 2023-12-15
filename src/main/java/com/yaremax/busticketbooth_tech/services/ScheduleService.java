@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
-    private final TicketService ticketService;
     private final RouteStopDtoMapper routeStopDtoMapper;
 
     public Schedule findById(Integer scheduleId) {
@@ -94,7 +93,7 @@ public class ScheduleService {
         scheduleRepository.delete(schedule);
     }
 
-    public List<Integer> getAvailableSeats(Integer scheduleId) {
+    public List<Integer> getAvailableSeats(Integer scheduleId, List<Ticket> bookedTickets) {
         Schedule schedule = findById(scheduleId);
 
         int totalSeats = schedule.getBus().getSeatCapacity();
@@ -104,7 +103,6 @@ public class ScheduleService {
             availableSeats.add(i);
         }
 
-        List<Ticket> bookedTickets = ticketService.findAllByScheduleAndTicketStatus(scheduleId, "booked");
         for (Ticket ticket : bookedTickets) {
             availableSeats.remove(ticket.getSeatNumber());
         }

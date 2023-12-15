@@ -9,6 +9,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -46,5 +49,13 @@ public class BusStopService {
         }
         busStop.setName(newName);
         busStopRepository.save(busStop);
+    }
+
+    public Map<Integer, BusStop> findByIds(List<Integer> ids) {
+        List<BusStop> busStops = busStopRepository.findAllById(ids);
+        if (busStops.size() != ids.size()) {
+            throw new ResourceNotFoundException("One or more BusStop IDs not found");
+        }
+        return busStops.stream().collect(Collectors.toMap(BusStop::getId, Function.identity()));
     }
 }

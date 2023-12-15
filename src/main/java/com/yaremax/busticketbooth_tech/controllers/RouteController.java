@@ -6,6 +6,8 @@ import com.yaremax.busticketbooth_tech.dto.RouteDto;
 import com.yaremax.busticketbooth_tech.services.BusStopService;
 import com.yaremax.busticketbooth_tech.services.RouteService;
 import com.yaremax.busticketbooth_tech.services.RouteStopService;
+import com.yaremax.busticketbooth_tech.services.TransportServiceMediator;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,9 +20,10 @@ import java.util.List;
 @RequestMapping("/routes")
 @AllArgsConstructor
 public class RouteController {
+    private final TransportServiceMediator transportServiceMediator;
     private final RouteStopService routeStopService;
-    private final RouteService routeService;
     private final BusStopService busStopService;
+    private final RouteService routeService;
 
     @GetMapping
     public String getRoutes(Model model) {
@@ -31,7 +34,7 @@ public class RouteController {
 
     @PostMapping
     public String addRoute(@ModelAttribute RouteDto routeDto) {
-        routeService.addRoute(routeDto);
+        transportServiceMediator.addRoute(routeDto);
         return "redirect:/routes";
     }
 
