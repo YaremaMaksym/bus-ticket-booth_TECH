@@ -29,4 +29,8 @@ public class Route {
         this.name = name;
         this.routeStops = routeStops;
     }
+
+    public Route(String name) {
+        this.name = name;
+    }
 }
