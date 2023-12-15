@@ -7,6 +7,8 @@ import com.yaremax.busticketbooth_tech.dto.TicketDto;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.mappers.TicketMapper;
 import com.yaremax.busticketbooth_tech.projections.TicketInfo;
+import com.yaremax.busticketbooth_tech.repositories.BusStopRepository;
+import com.yaremax.busticketbooth_tech.repositories.ScheduleRepository;
 import com.yaremax.busticketbooth_tech.repositories.TicketRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,8 @@ import java.util.List;
 @AllArgsConstructor
 public class TicketService {
     private final TicketRepository ticketRepository;
+    private final ScheduleRepository scheduleRepository;
+    private final BusStopRepository busStopRepository;
     private final TicketMapper ticketMapper;
 
     public Ticket findById(Integer ticketId) {
@@ -30,8 +34,10 @@ public class TicketService {
     }
 
     @Transactional
-    public Ticket addTicket(TicketDto ticketDto, Schedule schedule, BusStop busStop) {
-        Ticket ticket = ticketMapper.toEntity(ticketDto, schedule, busStop);
+    public Ticket addTicket(TicketDto ticketDto) {
+        Ticket ticket = ticketMapper.toEntity(ticketDto,
+                scheduleRepository.getReferenceById(ticketDto.getScheduleId()),
+                busStopRepository.getReferenceById(ticketDto.getBusStopId()));
         return ticketRepository.save(ticket);
     }
 

@@ -3,6 +3,7 @@ package com.yaremax.busticketbooth_tech.services;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -27,12 +28,6 @@ public class TransportServiceMediator {
     private final TicketService ticketService;
     private final RouteService routeService;
     private final BusService busService;
-
-    public Ticket addTicket(TicketDto ticketDto) {
-        Schedule schedule = scheduleService.findById(ticketDto.getScheduleId());
-        BusStop busStop = busStopService.findById(ticketDto.getBusStopId());
-        return ticketService.addTicket(ticketDto, schedule, busStop);
-    }
 
     public void addRoute(RouteDto routeDto) {
         Route route = routeService.addRoute(routeDto);

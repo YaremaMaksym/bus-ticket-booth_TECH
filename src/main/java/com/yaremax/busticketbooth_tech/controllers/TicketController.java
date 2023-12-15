@@ -32,7 +32,7 @@ public class TicketController {
 
     @PostMapping
     public String addTicket(@ModelAttribute TicketDto ticketDto) {
-        Ticket ticket = transportServiceMediator.addTicket(ticketDto);
+        Ticket ticket = ticketService.addTicket(ticketDto);
         return "redirect:tickets/" + ticket.getId();
     }
 
