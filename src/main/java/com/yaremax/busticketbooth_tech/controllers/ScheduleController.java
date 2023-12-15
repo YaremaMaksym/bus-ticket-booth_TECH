@@ -38,7 +38,6 @@ public class ScheduleController {
         return "schedules";
     }
 
-    // TODO: зробити dto
     @PostMapping
     public String addSchedule(@ModelAttribute Schedule schedule) {
         scheduleService.addSchedule(schedule);
