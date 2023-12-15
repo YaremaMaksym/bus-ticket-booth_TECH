@@ -1,23 +1,16 @@
 package com.yaremax.busticketbooth_tech.mappers;
 
 import com.yaremax.busticketbooth_tech.data.Ticket;
+import com.yaremax.busticketbooth_tech.data.Schedule;
+import com.yaremax.busticketbooth_tech.data.BusStop;
 import com.yaremax.busticketbooth_tech.dto.TicketDto;
-import com.yaremax.busticketbooth_tech.services.BusStopService;
-import com.yaremax.busticketbooth_tech.services.ScheduleService;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.ApplicationScope;
+import org.springframework.stereotype.Component;
 
-@Service
-@ApplicationScope
-@AllArgsConstructor
+@Component
 public class TicketMapper {
-    private final ScheduleService scheduleService;
-    private final BusStopService busStopService;
-
-    public Ticket toEntity(TicketDto ticketDto) {
-        return new Ticket(scheduleService.findById(ticketDto.getScheduleId()),
-                busStopService.findById(ticketDto.getBusStopId()),
+    public Ticket toEntity(TicketDto ticketDto, Schedule schedule, BusStop busStop) {
+        return new Ticket(schedule,
+                busStop,
                 ticketDto.getSeatNumber(),
                 ticketDto.getTicketStatus());
     }

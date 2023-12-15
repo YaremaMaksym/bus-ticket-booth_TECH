@@ -37,5 +37,5 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer> {
             "FROM Ticket t " +
             "WHERE t.schedule.bus.id = :busId AND " +
             "t.schedule.departureDateTime > CURRENT_TIMESTAMP")
-    Integer countTicketsForScheduleByBusSerialNumber(Integer busId);
+    Integer countTicketsForScheduleByBus(Integer busId);
 }

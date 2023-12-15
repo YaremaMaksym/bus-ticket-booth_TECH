@@ -1,5 +1,7 @@
 package com.yaremax.busticketbooth_tech.services;
 
+import com.yaremax.busticketbooth_tech.data.BusStop;
+import com.yaremax.busticketbooth_tech.data.Schedule;
 import com.yaremax.busticketbooth_tech.data.Ticket;
 import com.yaremax.busticketbooth_tech.dto.TicketDto;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
@@ -28,8 +30,8 @@ public class TicketService {
     }
 
     @Transactional
-    public Ticket addTicket(TicketDto ticketDto) {
-        Ticket ticket = ticketMapper.toEntity(ticketDto);
+    public Ticket addTicket(TicketDto ticketDto, Schedule schedule, BusStop busStop) {
+        Ticket ticket = ticketMapper.toEntity(ticketDto, schedule, busStop);
         return ticketRepository.save(ticket);
     }
 
@@ -40,8 +42,8 @@ public class TicketService {
         ticketRepository.saveAndFlush(ticket);
     }
 
-    public Integer countTicketsForScheduleByBusSerialNumber(Integer busId) {
-        return ticketRepository.countTicketsForScheduleByBusSerialNumber(busId);
+    public Integer countTicketsForScheduleByBus(Integer busId) {
+        return ticketRepository.countTicketsForScheduleByBus(busId);
     }
 
     public List<TicketInfo> findAllTicketInfos() {

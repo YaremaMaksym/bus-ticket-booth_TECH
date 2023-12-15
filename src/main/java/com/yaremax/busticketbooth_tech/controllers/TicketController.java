@@ -3,6 +3,8 @@ package com.yaremax.busticketbooth_tech.controllers;
 import com.yaremax.busticketbooth_tech.data.Ticket;
 import com.yaremax.busticketbooth_tech.dto.TicketDto;
 import com.yaremax.busticketbooth_tech.services.TicketService;
+import com.yaremax.busticketbooth_tech.services.TransportServiceMediator;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/tickets")
 @AllArgsConstructor
 public class TicketController {
+    private final TransportServiceMediator transportServiceMediator;
     private final TicketService ticketService;
 
     @GetMapping
@@ -29,7 +32,7 @@ public class TicketController {
 
     @PostMapping
     public String addTicket(@ModelAttribute TicketDto ticketDto) {
-        Ticket ticket = ticketService.addTicket(ticketDto);
+        Ticket ticket = transportServiceMediator.addTicket(ticketDto);
         return "redirect:tickets/" + ticket.getId();
     }
 

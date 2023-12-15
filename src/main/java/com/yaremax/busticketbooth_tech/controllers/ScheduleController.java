@@ -15,9 +15,10 @@ import java.util.List;
 @RequestMapping("/schedules")
 @AllArgsConstructor
 public class ScheduleController {
+    private final TransportServiceMediator transportServiceMediator;
     private final ScheduleService scheduleService;
-    private final TicketService ticketService;
     private final BusStopService busStopService;
+    private final TicketService ticketService;
     private final RouteService routeService;
 
     @GetMapping
@@ -62,7 +63,7 @@ public class ScheduleController {
     @ResponseBody
     @GetMapping("/{id}/available-seats")
     public ResponseEntity<List<Integer>> getAvailableSeats(@PathVariable Integer id) {
-        return ResponseEntity.ok(scheduleService.getAvailableSeats(id));
+        return ResponseEntity.ok(transportServiceMediator.getAvailableSeats(id));
     }
 
 }
