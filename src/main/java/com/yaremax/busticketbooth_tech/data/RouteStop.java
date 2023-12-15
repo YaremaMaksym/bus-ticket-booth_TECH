@@ -1,9 +1,7 @@
 package com.yaremax.busticketbooth_tech.data;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -31,7 +29,7 @@ public class RouteStop {
     @Column(name = "sequence_number")
     private Integer sequenceNumber;
 
-    @Column(name = "departure_offset")
-    private Integer departureOffset;
+    @Column(name = "departure_minutes_offset")
+    private Integer departureMinutesOffset;
 
 }

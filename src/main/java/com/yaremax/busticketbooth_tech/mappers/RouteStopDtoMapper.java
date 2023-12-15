@@ -18,7 +18,7 @@ public class RouteStopDtoMapper {
         dto.setRouteId(routeStop.getId().getRouteId());
         dto.setStopId(routeStop.getId().getStopId());
         dto.setSequenceNumber(routeStop.getSequenceNumber());
-        dto.setDepartureOffset(routeStop.getDepartureOffset());
+        dto.setDepartureMinutesOffset(routeStop.getDepartureMinutesOffset());
         dto.setRoute(routeStop.getRoute());
         dto.setBusStop(routeStop.getBusStop());
         return dto;
@@ -30,7 +30,7 @@ public class RouteStopDtoMapper {
         routeStop.setRoute(route);
         routeStop.setBusStop(busStop);
         routeStop.setSequenceNumber(routeStopDto.getSequenceNumber());
-        routeStop.setDepartureOffset(routeStopDto.getDepartureOffset());
+        routeStop.setDepartureMinutesOffset(routeStopDto.getDepartureMinutesOffset());
         return routeStop;
     }
 

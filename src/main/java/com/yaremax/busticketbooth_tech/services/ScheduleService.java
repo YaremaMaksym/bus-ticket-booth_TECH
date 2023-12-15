@@ -52,7 +52,7 @@ public class ScheduleService {
 
                     int totalTime = 0;
                     for (RouteStop rs : orderedRouteStops) {
-                        totalTime += rs.getDepartureOffset();
+                        totalTime += rs.getDepartureMinutesOffset();
                         if (rs.getBusStop().getId().equals(busStopId)) {
                             return new AbstractMap.SimpleEntry<>(schedule, totalTime);
                         }
@@ -72,7 +72,7 @@ public class ScheduleService {
         int totalTime = 0;
 
         for (RouteStopDto rs : routeStopDtos) {
-            totalTime += rs.getDepartureOffset();
+            totalTime += rs.getDepartureMinutesOffset();
 
             LocalDateTime arrivalTime = schedule.getDepartureDateTime().plusMinutes(totalTime);
 

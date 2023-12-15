@@ -24,15 +24,15 @@ public interface BusRepository extends JpaRepository<Bus, Integer> {
             "    WHERE s.bus_id = b.bus_id " +
             "    AND (" +
             "        :departureDatetime BETWEEN s.departure_datetime AND " +
-            "        (s.departure_datetime + INTERVAL '1 minute' * (SELECT SUM(rs.departure_offset)" +
+            "        (s.departure_datetime + INTERVAL '1 minute' * (SELECT SUM(rs.departure_minutes_offset)" +
             "                                                     FROM routes_stops rs" +
             "                                                     WHERE rs.route_id = s.route_id)) " +
             "        OR :endRouteDatetime BETWEEN s.departure_datetime AND " +
-            "        (s.departure_datetime + INTERVAL '1 minute' * (SELECT SUM(rs.departure_offset)" +
+            "        (s.departure_datetime + INTERVAL '1 minute' * (SELECT SUM(rs.departure_minutes_offset)" +
             "                                                     FROM routes_stops rs" +
             "                                                     WHERE rs.route_id = s.route_id)) " +
             "        OR s.departure_datetime BETWEEN :departureDatetime AND :endRouteDatetime " +
-            "        OR (s.departure_datetime + INTERVAL '1 minute' * (SELECT SUM(rs.departure_offset)" +
+            "        OR (s.departure_datetime + INTERVAL '1 minute' * (SELECT SUM(rs.departure_minutes_offset)" +
             "                                                        FROM routes_stops rs" +
             "                                                        WHERE rs.route_id = s.route_id)) BETWEEN :departureDatetime AND :endRouteDatetime " +
             "    )" +
