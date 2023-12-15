@@ -1,7 +1,6 @@
 package com.yaremax.busticketbooth_tech.services;
 
 import com.yaremax.busticketbooth_tech.data.Bus;
-import com.yaremax.busticketbooth_tech.data.Route;
 import com.yaremax.busticketbooth_tech.data.RouteStop;
 import com.yaremax.busticketbooth_tech.projections.BusInfo;
 import com.yaremax.busticketbooth_tech.exception.DuplicateResourceException;
@@ -63,7 +62,7 @@ public class BusService {
     public List<BusInfo> findAvailableBusInfosByTimeAndRoute(LocalDateTime departureDateTime, Set<RouteStop> routeStops) {
         int totalTime = 0;
         for (RouteStop rs : routeStops) {
-            totalTime += rs.getDepartureOffset();
+            totalTime += rs.getDepartureMinutesOffset();
         }
 
         return busRepository.findAvailableBusInfosByTime(departureDateTime, departureDateTime.plusMinutes(totalTime));
