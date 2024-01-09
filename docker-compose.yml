@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+    postgres-service:
+        image: postgres:16
+        container_name: some-postgres-container
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: pass
+            PGDATA: /var/lib/postgresql/data/pgdata
+        volumes:
+            - C:/dev/postgres_container_data:/var/lib/postgresql/data
+        ports:
+            - "5433:5432"
+        networks:
+            - some-network
+        restart: unless-stopped
+
+    bus-ticket-booth-service:
+        image: xsakon/bus-ticket-booth-image:latest
+        container_name: bus-ticket-booth-container
+        ports:
+            - "9090:8080"
+        environment:
+            - SPRING_PROFILES_ACTIVE=docker
+        networks:
+            - some-network
+        depends_on:
+            - postgres-service
+
+networks:
+    some-network:
+        driver: bridge
