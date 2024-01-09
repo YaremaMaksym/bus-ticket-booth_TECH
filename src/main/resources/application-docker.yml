@@ -1,0 +1,9 @@
+spring:
+    datasource:
+        url: jdbc:postgresql://some-postgres-container:5432/bus_ticket_booth
+        username: postgres
+        password: pass
+    mvc:
+        hiddenmethod:
+            filter:
+                enabled: true
