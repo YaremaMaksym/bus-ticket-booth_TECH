@@ -85,7 +85,7 @@
                 <option value="">Select a stop</option>
                 <option th:each="stop : ${bus_stops}" th:value="${stop.id}" th:text="${stop.name}"></option>
             </select>
-            <input id="input-departureOffset" type="number" placeholder="Time from last stop (min)" required>
+            <input id="input-departureMinutesOffset" type="number" placeholder="Time from last stop (min)" required>
             <input id="input-sequenceNumber" type="hidden">
             <button type="button" onclick="removeStopInput(this)">Remove</button>
         </div>
@@ -117,7 +117,7 @@
 
         function assignParamsToStop(stopEntry, index) {
             stopEntry.querySelector('#input-stops').name = `routeStops[${index}].stopId`;
-            stopEntry.querySelector('#input-departureOffset').name = `routeStops[${index}].departureOffset`;
+            stopEntry.querySelector('#input-departureMinutesOffset').name = `routeStops[${index}].departureMinutesOffset`;
             stopEntry.querySelector('#input-sequenceNumber').name = `routeStops[${index}].sequenceNumber`;
             stopEntry.querySelector('#input-sequenceNumber').value = index + 1;
         }
