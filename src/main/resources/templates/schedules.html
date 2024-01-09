@@ -138,7 +138,7 @@
         function calculatePrice(routeStops, stopIndex) {
             let totalTime = 0;
             for (let i = 0; i <= stopIndex; i++) {
-                totalTime += routeStops[i].departureOffset;
+                totalTime += routeStops[i].departureMinutesOffset;
             }
             let roundedPrice = Math.round(1.1 * totalTime);
             document.getElementById('price-display').innerText = `${roundedPrice}`;
@@ -180,7 +180,7 @@
                 })
                 .then(data => {
                     routeStops = data;
-
+                    console.log(data);
                     let selectedStopIndex = document.getElementById('selectStop').selectedIndex;
                     calculatePrice(routeStops, selectedStopIndex);
                 })

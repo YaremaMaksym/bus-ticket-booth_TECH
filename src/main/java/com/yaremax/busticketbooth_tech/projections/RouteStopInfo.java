@@ -8,7 +8,7 @@ import com.yaremax.busticketbooth_tech.data.RouteStop;
 public interface RouteStopInfo {
     Integer getSequenceNumber();
 
-    Integer getDepartureOffset();
+    Integer getDepartureMinutesOffset();
 
     RouteStopIdInfo getId();
 
