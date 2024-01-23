@@ -1,21 +1,18 @@
 package com.yaremax.busticketbooth_tech.services;
 
-import com.yaremax.busticketbooth_tech.data.*;
+import com.yaremax.busticketbooth_tech.data.BusStop;
+import com.yaremax.busticketbooth_tech.data.Route;
+import com.yaremax.busticketbooth_tech.data.RouteStop;
 import com.yaremax.busticketbooth_tech.dto.RouteDto;
-import com.yaremax.busticketbooth_tech.dto.RouteStopDto;
-import com.yaremax.busticketbooth_tech.mappers.RouteStopDtoMapper;
-import com.yaremax.busticketbooth_tech.repositories.BusStopRepository;
-import com.yaremax.busticketbooth_tech.repositories.RouteRepository;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
+import com.yaremax.busticketbooth_tech.mappers.RouteStopDtoMapper;
+import com.yaremax.busticketbooth_tech.repositories.RouteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
