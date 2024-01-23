@@ -18,8 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TicketService {
     private final TicketRepository ticketRepository;
-    private final ScheduleRepository scheduleRepository;
-    private final BusStopRepository busStopRepository;
+    private final ReferenceService referenceService;
     private final TicketMapper ticketMapper;
 
     public Ticket findById(Integer ticketId) {
@@ -34,8 +33,8 @@ public class TicketService {
     @Transactional
     public Ticket addTicket(TicketDto ticketDto) {
         Ticket ticket = ticketMapper.toEntity(ticketDto,
-                scheduleRepository.getReferenceById(ticketDto.getScheduleId()),
-                busStopRepository.getReferenceById(ticketDto.getBusStopId()));
+                referenceService.getScheduleReferenceById(ticketDto.getScheduleId()),
+                referenceService.getBusStopReferenceById(ticketDto.getBusStopId()));
         return ticketRepository.save(ticket);
     }
 

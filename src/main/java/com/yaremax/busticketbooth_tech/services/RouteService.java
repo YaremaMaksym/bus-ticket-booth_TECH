@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RouteService {
     private final RouteStopDtoMapper routeStopDtoMapper;
-    private final BusStopRepository busStopRepository;
+    private final ReferenceService referenceService;
     private final RouteRepository routeRepository;
 
     public List<Route> findAll() {
@@ -41,7 +41,7 @@ public class RouteService {
 
         Set<RouteStop> routeStops = routeDto.getRouteStops().stream()
                 .map(routeStopDto -> {
-                    BusStop busStop = busStopRepository.getReferenceById(routeStopDto.getStopId());
+                    BusStop busStop = referenceService.getBusStopReferenceById(routeStopDto.getStopId());
                     return routeStopDtoMapper.toEntity(routeStopDto, route, busStop);
                 })
                 .collect(Collectors.toSet());
