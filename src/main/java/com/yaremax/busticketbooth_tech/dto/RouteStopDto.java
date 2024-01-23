@@ -4,7 +4,6 @@ import com.yaremax.busticketbooth_tech.data.BusStop;
 import com.yaremax.busticketbooth_tech.data.Route;
 import com.yaremax.busticketbooth_tech.data.RouteStop;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;

@@ -25,7 +25,6 @@ public class TransportServiceMediator {
 
     public List<BusInfo> findAvailableBusInfosByTimeAndRoute(LocalDateTime departureDateTime, Integer routeId) {
         Set<RouteStop> routeStops = routeService.findById(routeId).getRouteStops();
-
         return busService.findAvailableBusInfosByTimeAndRoute(departureDateTime, routeStops);
     }
 

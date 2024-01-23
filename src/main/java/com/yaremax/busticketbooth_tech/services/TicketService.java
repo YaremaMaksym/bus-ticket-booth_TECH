@@ -5,8 +5,6 @@ import com.yaremax.busticketbooth_tech.dto.TicketDto;
 import com.yaremax.busticketbooth_tech.exception.ResourceNotFoundException;
 import com.yaremax.busticketbooth_tech.mappers.TicketMapper;
 import com.yaremax.busticketbooth_tech.projections.TicketInfo;
-import com.yaremax.busticketbooth_tech.repositories.BusStopRepository;
-import com.yaremax.busticketbooth_tech.repositories.ScheduleRepository;
 import com.yaremax.busticketbooth_tech.repositories.TicketRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
