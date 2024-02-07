@@ -164,25 +164,48 @@ INSERT INTO routes_stops (route_id, stop_id, sequence_number, departure_minutes_
 INSERT INTO routes_stops (route_id, stop_id, sequence_number, departure_minutes_offset) VALUES (10, 1, 9, 173);
 INSERT INTO routes_stops (route_id, stop_id, sequence_number, departure_minutes_offset) VALUES (10, 10, 10, 113);
 
-
+/*
 -- Додавання рейсів
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (1, 27, '2023-12-16 18:00:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (1, 4, '2023-12-16 10:15:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (2, 8, '2023-12-16 09:30:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (2, 25, '2023-12-16 19:40:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (3, 28, '2023-12-16 17:20:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (3, 24, '2023-12-16 13:00:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (3, 12, '2023-12-16 01:40:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (4, 30, '2023-12-16 09:25:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (4, 7, '2023-12-16 10:15:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (4, 20, '2023-12-16 23:05:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (5, 16, '2023-12-16 10:55:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (5, 1, '2023-12-16 11:25:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (6, 29, '2023-12-16 18:10:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (7, 3, '2023-12-16 15:10:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (8, 17, '2023-12-16 17:00:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (8, 15, '2023-12-16 10:55:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (8, 18, '2023-12-16 15:00:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (9, 13, '2023-12-16 19:50:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (10, 9, '2023-12-16 15:00:00');
-INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (10, 2, '2023-12-16 11:45:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (1, 27, '2024-03-20 18:00:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (1, 4, '2024-03-20 10:15:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (2, 8, '2024-03-20 09:30:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (2, 25, '2024-03-20 19:40:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (3, 28, '2024-03-20 17:20:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (3, 24, '2024-03-20 13:00:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (3, 12, '2024-03-20 01:40:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (4, 30, '2024-03-20 09:25:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (4, 7, '2024-03-20 10:15:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (4, 20, '2024-03-20 23:05:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (5, 16, '2024-03-20 10:55:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (5, 1, '2024-03-20 11:25:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (6, 29, '2024-03-20 18:10:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (7, 3, '2024-03-20 15:10:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (8, 17, '2024-03-20 17:00:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (8, 15, '2024-03-20 10:55:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (8, 18, '2024-03-20 15:00:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (9, 13, '2024-03-20 19:50:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (10, 9, '2024-03-20 15:00:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (10, 2, '2024-03-20 11:45:00');
+*/
+
+-- Додавання рейсів з поточною датою і початковим часом
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (1, 27, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '18:00:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (1, 4, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '10:15:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (2, 8, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '09:30:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (2, 25, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '19:40:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (3, 28, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '17:20:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (3, 24, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '13:00:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (3, 12, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '01:40:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (4, 30, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '09:25:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (4, 7, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '10:15:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (4, 20, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '23:05:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (5, 16, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '10:55:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (5, 1, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '11:25:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (6, 29, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '18:10:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (7, 3, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '15:10:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (8, 17, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '17:00:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (8, 15, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '10:55:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (8, 18, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '15:00:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (9, 13, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '19:50:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (10, 9, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '15:00:00');
+INSERT INTO schedule (route_id, bus_id, departure_datetime) VALUES (10, 2, DATE_TRUNC('day', CURRENT_TIMESTAMP) + interval '1 day' + TIME '11:45:00');
