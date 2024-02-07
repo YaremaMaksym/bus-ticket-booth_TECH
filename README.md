@@ -8,8 +8,13 @@ Here are some of the main features of the app:
 
 ## Table of Contents
 
+- [Demo](#demo)
 - [Installation](#installation)
 - [Configuration](#configuration)
+
+## Demo
+Demonstration of schedules page
+![NVIDIA_Share_tFEmhmCcmb](https://github.com/YaremaMaksym/bus-ticket-booth_TECH/assets/31901135/29d822c2-c04a-4285-baff-fbd032232d51)
 
 ## Installation
 
