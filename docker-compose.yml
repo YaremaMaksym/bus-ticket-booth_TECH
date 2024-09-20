@@ -6,8 +6,8 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: pass
             PGDATA: /var/lib/postgresql/data/pgdata
-        volumes:
-            - C:/dev/postgres_container_data:/var/lib/postgresql/data
+#        volumes:
+#            - C:/dev/postgres_container_data:/var/lib/postgresql/data
         ports:
             - "5433:5432"
         networks:
