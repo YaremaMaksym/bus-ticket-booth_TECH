@@ -33,8 +33,8 @@ To run the project locally, follow these steps:
    * Install and configure PostgreSQL on your system.
    * download 2 scripts from my gist(https://gist.github.com/YaremaMaksym/a18c90d51817db7b75533f5c68e91baf)
       or from this repository
-   * run `db_script_btb.sql` to create db
-   * run `dummy_data_btb.sql` to add some data to db
+   * run `init_db.sql` to create db
+   * run `insert_dummy_data.sql` to add some data to db
    * Update the `application.properties` file (see [Configuration](#configuration)) with your PostgreSQL credentials.
 
 4. Run the application
