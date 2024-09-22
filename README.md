@@ -9,12 +9,29 @@ Here are some of the main features of the app:
 ## Table of Contents
 
 - [Demo](#demo)
+- [Technologies](#technologies)
 - [Installation](#installation)
 - [Configuration](#configuration)
 
 ## Demo
 Demonstration of schedules page
 ![NVIDIA_Share_tFEmhmCcmb](https://github.com/YaremaMaksym/bus-ticket-booth_TECH/assets/31901135/29d822c2-c04a-4285-baff-fbd032232d51)
+
+## Technologies
+
+The project uses the following technologies and frameworks:
+
+- Java
+- Maven (for project management)
+- Spring (Framework, Boot, MVC, Data JPA)
+- REST APIs
+- Thymeleaf
+- HTML
+- Postgres
+- Lombok (for boilerplate reduction)
+- Mokito (for testing)
+- Docker (containerization platform)
+- Git (for version control)
 
 ## Installation
 
